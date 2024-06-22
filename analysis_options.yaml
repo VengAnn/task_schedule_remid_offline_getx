@@ -1,0 +1,9 @@
+include: package:flutter_lints/flutter.yaml
+
+linter:
+  rules:
+    # Custom rules or overrides can be added here
+    avoid_print: false  # Example to disable a specific lint rule
+
+# Additional information about this file can be found at
+# https://dart.dev/guides/language/analysis-options
