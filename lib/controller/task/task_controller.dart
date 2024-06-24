@@ -34,6 +34,11 @@ class TaskController extends GetxController {
     getTasks();
   }
 
+  void clearAllTask() {
+    DBHelper.clearDatabase();
+    getTasks();
+  }
+
   // update tasks
   void updateTask(Task task) {
     DBHelper.updateTask(task);

@@ -13,7 +13,7 @@ class MyDrawer extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Drawer(
-        width: Dimensions.width20 * 20,
+        width: Dimensions.width20 * 17,
         backgroundColor: Colors.white,
         child: SingleChildScrollView(
           child: Column(

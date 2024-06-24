@@ -50,18 +50,38 @@ class _HistoryPageState extends State<HistoryPage> {
       length: 2,
       child: Scaffold(
         backgroundColor: Colors.white,
-        appBar: AppBar(
-          leading: IconButton(
-            onPressed: () {
-              Get.find<CalendarPageController>().getTaskFromTaskController();
-              Get.back();
-            },
-            icon: const Icon(Icons.arrow_back_ios),
-          ),
-          title: SimpleText(
-            text: 'title_text_histroy'.tr,
-            sizeText: Dimensions.fontSize20,
-            fontWeight: FontWeight.bold,
+        appBar: PreferredSize(
+          preferredSize: Size(double.maxFinite, Dimensions.height20 * 3),
+          child: SafeArea(
+            child: Container(
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  colors: [
+                    Colors.blue.withOpacity(0.7),
+                    Colors.blue.withOpacity(0.3),
+                  ],
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                ),
+              ),
+              child: Row(
+                children: [
+                  IconButton(
+                    onPressed: () {
+                      Get.find<CalendarPageController>()
+                          .getTaskFromTaskController();
+                      Get.back();
+                    },
+                    icon: const Icon(Icons.arrow_back_ios),
+                  ),
+                  SimpleText(
+                    text: 'title_text_histroy'.tr,
+                    sizeText: Dimensions.fontSize20,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ],
+              ),
+            ),
           ),
         ),
         body: Padding(

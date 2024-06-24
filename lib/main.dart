@@ -88,6 +88,7 @@ class MyApp extends StatelessWidget {
       fallbackLocale: const Locale('en'),
       initialRoute: RouteHelper.getSplashPage(),
       getPages: RouteHelper.routes,
+      //home: const GraphTestShow(),
     );
   }
 }

@@ -34,12 +34,11 @@ class _CalendarPageState extends State<CalendarPage> {
                   Container(
                     height: Dimensions.height20 * 2.7,
                     width: double.maxFinite,
-                    decoration: const BoxDecoration(
+                    decoration: BoxDecoration(
                       gradient: LinearGradient(
                         colors: [
-                          Colors.amber,
-                          Colors.blue,
-                          Colors.black,
+                          Colors.blue.withOpacity(0.7),
+                          Colors.blue.withOpacity(0.3),
                         ],
                         begin: Alignment.topLeft,
                         end: Alignment.bottomRight,

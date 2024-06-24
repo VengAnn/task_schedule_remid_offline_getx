@@ -35,7 +35,7 @@ class _ItemDrawerWidgetState extends State<ItemDrawerWidget> {
             _isTapped = !_isTapped;
           });
           // delay a bit to see something tap on or see animation
-          Future.delayed(const Duration(milliseconds: 200), () {
+          Future.delayed(const Duration(milliseconds: 150), () {
             widget.onTap();
           });
         },

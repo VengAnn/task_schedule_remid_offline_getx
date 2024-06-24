@@ -65,6 +65,8 @@ dependencies:
   awesome_notifications: ^0.8.2
   # for custom change laguage calendars (like khmer , vietnamese , english ..etc.)
   flutter_localization: ^0.2.0
+  # for show graph
+  fl_chart: ^0.68.0
 
 dev_dependencies:
   flutter_test:
