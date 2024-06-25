@@ -1,6 +1,7 @@
 import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:task_remind_offline/controller/awesome_noti_controller/awesome_noti_controller.dart';
 import 'package:task_remind_offline/injection.dart';
 import 'package:task_remind_offline/routes/route_helper.dart';
 import 'package:task_remind_offline/services/databaseHelper/database_helper.dart';
@@ -43,6 +44,17 @@ void main() async {
   runApp(MyApp(
     selectedLanguage: selectedLanguage,
   ));
+
+  // set for when tap on notification show what page i want to show
+  AwesomeNotifications().setListeners(
+    onActionReceivedMethod: NotificationController.onActionReceivedMethod,
+    onNotificationCreatedMethod:
+        NotificationController.onNotificationCreatedMethod,
+    onNotificationDisplayedMethod:
+        NotificationController.onNotificationDisplayedMethod,
+    onDismissActionReceivedMethod:
+        NotificationController.onDismissActionReceivedMethod,
+  );
 }
 
 class MyApp extends StatelessWidget {

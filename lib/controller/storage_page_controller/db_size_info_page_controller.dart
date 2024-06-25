@@ -5,7 +5,7 @@ import 'package:task_remind_offline/models/task_sqlite/task_model.dart';
 class StoragePageController extends GetxController {
   final TaskController taskController = Get.put(TaskController());
 
-  final List<Task> tasksList = [];
+  List<Task> tasksList = [];
 
   @override
   void onInit() {
@@ -15,11 +15,13 @@ class StoragePageController extends GetxController {
   }
 
   @override
+  // ignore: unnecessary_overrides
   void onClose() {
     super.onClose();
   }
 
   Future<void> getTaskFromStorage() async {
+    tasksList = [];
     await taskController.getTasks();
 
     for (Task task in taskController.taskList) {
@@ -29,7 +31,7 @@ class StoragePageController extends GetxController {
   }
 
   // clear storage sqlite
-  Future<void> clearStorage() async {
+  void clearStorage() {
     taskController.clearAllTask();
     tasksList.clear();
     update();

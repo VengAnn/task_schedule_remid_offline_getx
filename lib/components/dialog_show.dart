@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:task_remind_offline/components/dialogs.dart';
 import 'package:task_remind_offline/controller/calendar/calendare_page_controller.dart';
+import 'package:task_remind_offline/controller/history_page_controller/history_controller.dart';
 import 'package:task_remind_offline/controller/task/task_controller.dart';
 import 'package:task_remind_offline/models/task_sqlite/task_model.dart';
 import 'package:task_remind_offline/utils/app_style.dart';
@@ -36,7 +37,6 @@ class _DialogShowState extends State<DialogShow> {
   late TextEditingController _noteController;
 
   int selectedIndexColor = 0;
-  late DateTime _selectedDate;
   int _selectedRemider = 0;
   String _selectedRepeat = "None";
 
@@ -122,17 +122,17 @@ class _DialogShowState extends State<DialogShow> {
 
     _titleController = TextEditingController(text: widget.task?.title ?? '');
     _noteController = TextEditingController(text: widget.task?.note ?? '');
-    _selectedDate = widget.task != null
+    _selectedStartDateTime = widget.task != null
         ? DateTime.parse(widget.task!.date!)
         : DateTime.now();
 
     _selectedStartDateTime = widget.task != null
-        ? DateFormat("hh:mm a")
+        ? DateFormat("yyyy-MM-dd hh:mm a")
             .parse("${widget.task!.date!} ${widget.task!.startTime!}")
         : DateTime.now();
 
     _selectedEndDateTime = widget.task != null
-        ? DateFormat("hh:mm a")
+        ? DateFormat("yyyy-MM-dd hh:mm a")
             .parse("${widget.task!.date!} ${widget.task!.endTime!}")
         : DateTime.now().add(const Duration(hours: 1));
 
@@ -271,6 +271,13 @@ class _DialogShowState extends State<DialogShow> {
         if (widget.isForUpdate) {
           if (widget.task != null) {
             _updateTaskToDB();
+
+            Get.find<HistoryPageController>().getTaskCompleted();
+            Get.find<HistoryPageController>().getTaskNotCompleted();
+            Get.find<HistoryPageController>().getTaskFromStorage();
+            Get.back();
+
+            Dialogs.showSnackBar("task update successfully");
           } else {
             Dialogs.showSnackBar("task on update is null or empty");
           }
@@ -282,9 +289,9 @@ class _DialogShowState extends State<DialogShow> {
           // call this to see what changed immediately like refresh
           Get.find<CalendarPageController>().getTaskFromTaskController();
           Get.find<CalendarPageController>().getDataLocalForAlerNotification();
-        }
 
-        Get.back();
+          Get.back();
+        }
       } else {
         Dialogs.showSnackBar("start time and end time can't the same!");
       }
@@ -294,7 +301,8 @@ class _DialogShowState extends State<DialogShow> {
   }
 
   _updateTaskToDB() {
-    String formattedDate = DateFormat('yyyy-MM-dd').format(_selectedDate);
+    String formattedDate =
+        DateFormat('yyyy-MM-dd').format(_selectedStartDateTime);
     Task task = Task(
       id: widget.task!.id,
       note: _noteController.text,
@@ -312,7 +320,8 @@ class _DialogShowState extends State<DialogShow> {
   }
 
   _addTaskToDB() async {
-    String formattedDate = DateFormat('yyyy-MM-dd').format(_selectedDate);
+    String formattedDate =
+        DateFormat('yyyy-MM-dd').format(_selectedStartDateTime);
     Task task = Task(
       note: _noteController.text,
       title: _titleController.text,

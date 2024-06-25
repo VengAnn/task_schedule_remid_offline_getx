@@ -32,11 +32,11 @@ class _SplashPageState extends State<SplashPage> with TickerProviderStateMixin {
         // when the animation is completed do this
         bool isExistOnboarding = SharedPreferencesService.loadOnboardingExist();
         if (isExistOnboarding) {
-          Get.offNamed(
+          Get.offAllNamed(
             RouteHelper.getCalenderPage(),
           );
         } else {
-          Get.offNamed(
+          Get.offAllNamed(
             RouteHelper.getOnBoardingLanguagePage(),
             arguments: false,
           );

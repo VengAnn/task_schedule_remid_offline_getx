@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -5,6 +7,8 @@ import 'package:syncfusion_flutter_calendar/calendar.dart';
 import 'package:task_remind_offline/components/dialog_show.dart';
 import 'package:task_remind_offline/components/my_drawer.dart';
 import 'package:task_remind_offline/controller/calendar/calendare_page_controller.dart';
+import 'package:task_remind_offline/models/task_sqlite/task_model.dart';
+import 'package:task_remind_offline/pages/detail_page/detail_page.dart';
 import 'package:task_remind_offline/utils/dimensions.dart';
 import 'package:task_remind_offline/widgets/simple_text.dart';
 
@@ -86,17 +90,17 @@ class _CalendarPageState extends State<CalendarPage> {
                   // show calendar full screen if view week
                   calendarPageController.calendarView == CalendarView.week
                       ? const Expanded(
-                          child: showCalendar(),
+                          child: ShowCalendar(),
                         )
                       : calendarPageController.calendarView == CalendarView.day
                           ? const Expanded(
-                              child: showCalendar(),
+                              child: ShowCalendar(),
                             )
                           :
                           // calendar view month show a bit heigth
                           const Expanded(
                               child: SizedBox(
-                                child: showCalendar(),
+                                child: ShowCalendar(),
                               ),
                             ),
                 ],
@@ -115,71 +119,137 @@ class _CalendarPageState extends State<CalendarPage> {
   }
 }
 
-// ignore: camel_case_types
-class showCalendar extends StatelessWidget {
-  const showCalendar({
-    super.key,
-  });
+class ShowCalendar extends StatelessWidget {
+  const ShowCalendar({
+    Key? key,
+  }) : super(key: key);
+
+  void calendarTapped(CalendarTapDetails calendarTapDetails) {
+    if (calendarTapDetails.targetElement == CalendarElement.appointment) {
+      Appointment appointment = calendarTapDetails.appointments![0];
+
+      List<Object>? listObj = appointment.resourceIds;
+
+      List<Task> listTask = [];
+      // ignore: unused_local_variable
+      for (Object obj in listObj!) {
+        if (obj is Task) {
+          listTask.add(obj);
+        }
+      }
+
+      // Find the task that matches the tapped appointment
+      Task? tappedTask;
+      for (Task task in listTask) {
+        if (task.id == appointment.id) {
+          tappedTask = task;
+          break;
+        }
+      }
+      if (tappedTask != null) {
+        Get.to(() => DetailTaskPage(task: tappedTask));
+      } else {
+        log("No matching task found for the tapped appointment.");
+      }
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     return GetBuilder<CalendarPageController>(
-        builder: (calendarPageController) {
-      return SfCalendar(
-        controller: Get.find<CalendarPageController>().calendarController,
-        onTap: (CalendarTapDetails details) {},
-        view: Get.find<CalendarPageController>().calendarView,
-        onSelectionChanged: (CalendarSelectionDetails details) {},
-        dataSource: DataSource(calendarPageController.appointments),
-        headerStyle: CalendarHeaderStyle(
-          textAlign: TextAlign.center,
-          backgroundColor: Colors.grey[300],
-          textStyle: TextStyle(
-            fontSize: Dimensions.fontSize20,
-            fontWeight: FontWeight.bold,
-            color: Colors.black,
-          ),
-        ),
-        viewHeaderStyle: ViewHeaderStyle(
-          dayTextStyle: TextStyle(
-            fontSize: Dimensions.fontSize15,
-            fontWeight: FontWeight.bold,
-            color: Colors.blue,
-          ),
-          dateTextStyle: TextStyle(
-            fontSize: Dimensions.fontSize15,
-            color: Colors.red,
-          ),
-        ),
-        monthViewSettings: MonthViewSettings(
-          appointmentDisplayMode: MonthAppointmentDisplayMode.indicator,
-          showAgenda: true,
-          agendaViewHeight: Dimensions.height20 * 15,
-          agendaStyle: AgendaStyle(
-            backgroundColor: Colors.blue[200],
-            dayTextStyle: TextStyle(
-              fontSize: Dimensions.fontSize15,
+      builder: (calendarPageController) {
+        return SfCalendar(
+          controller: Get.find<CalendarPageController>().calendarController,
+          onTap: (CalendarTapDetails details) {
+            if (details.appointments == null || details.appointments!.isEmpty) {
+              // No appointments, show modal bottom sheet or other action
+              showModalBottomSheet(
+                context: context,
+                isScrollControlled: true,
+                builder: (context) {
+                  return DraggableScrollableSheet(
+                    initialChildSize: 0.2,
+                    minChildSize: 0.2,
+                    maxChildSize: 0.9,
+                    expand: false,
+                    builder: (context, scrollController) {
+                      return SingleChildScrollView(
+                        controller: scrollController,
+                        child: Container(
+                          height: Dimensions.screenHeight,
+                          color: Colors.transparent,
+                          child: const DialogShow(),
+                        ),
+                      );
+                    },
+                  );
+                },
+              );
+            }
+
+            // if not null or empty show on tap on the detail page
+            calendarTapped(details);
+          },
+          allowedViews: const [
+            CalendarView.week,
+            CalendarView.day,
+            CalendarView.month,
+          ],
+          view: Get.find<CalendarPageController>().calendarView,
+          onSelectionChanged: (CalendarSelectionDetails details) {
+            // Handle selection change if needed
+          },
+          dataSource: DataSource(calendarPageController.appointments),
+          headerStyle: CalendarHeaderStyle(
+            backgroundColor: Colors.transparent,
+            textAlign: TextAlign.center,
+            textStyle: TextStyle(
+              fontSize: Dimensions.fontSize20,
               fontWeight: FontWeight.bold,
               color: Colors.black,
             ),
+          ),
+          viewHeaderStyle: ViewHeaderStyle(
+            dayTextStyle: TextStyle(
+              fontSize: Dimensions.fontSize15,
+              fontWeight: FontWeight.bold,
+              color: Colors.blue,
+            ),
             dateTextStyle: TextStyle(
               fontSize: Dimensions.fontSize15,
-              fontWeight: FontWeight.w600,
-              color: Colors.black87,
+              color: Colors.red,
             ),
           ),
-        ),
-        todayHighlightColor: Colors.orange,
-        selectionDecoration: BoxDecoration(
-          color: Colors.transparent,
-          border: Border.all(color: Colors.red, width: 2),
-          borderRadius: BorderRadius.circular(Dimensions.width10),
-        ),
-      );
-    });
+          monthViewSettings: MonthViewSettings(
+            appointmentDisplayMode: MonthAppointmentDisplayMode.indicator,
+            showAgenda: true,
+            agendaViewHeight: Dimensions.height20 * 15,
+            agendaStyle: AgendaStyle(
+              backgroundColor: Colors.blue[200],
+              dayTextStyle: TextStyle(
+                fontSize: Dimensions.fontSize15,
+                fontWeight: FontWeight.bold,
+                color: Colors.black,
+              ),
+              dateTextStyle: TextStyle(
+                fontSize: Dimensions.fontSize15,
+                fontWeight: FontWeight.w600,
+                color: Colors.black87,
+              ),
+            ),
+          ),
+          todayHighlightColor: Colors.orange,
+          selectionDecoration: BoxDecoration(
+            color: Colors.transparent,
+            border: Border.all(color: Colors.red, width: 2),
+          ),
+        );
+      },
+    );
   }
 }
 
+//
 class DataSource extends CalendarDataSource {
   DataSource(List<Appointment> source) {
     appointments = source;

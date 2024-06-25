@@ -92,7 +92,7 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
                     onTap: () {
                       // save is Onboarding is already show
                       SharedPreferencesService.saveOnboardingExist(true);
-                      Get.toNamed(RouteHelper.getCalenderPage());
+                      Get.offAllNamed(RouteHelper.getCalenderPage());
                     },
                     child: SimpleText(
                       // this text continue to the calendar page

@@ -73,4 +73,19 @@ class SharedPreferencesService {
   static void clearProfile() {
     _prefs.remove("profile");
   }
+
+  // save date for compare
+  static void saveDateForCompare(String? date) {
+    _prefs.setString("dateForCompare", date!);
+  }
+
+  // get date for compare
+  static String? getDateForCompare() {
+    return _prefs.getString("dateForCompare");
+  }
+
+  // clear date for compare
+  static void clearDateForCompare() {
+    _prefs.remove("dateForCompare");
+  }
 }

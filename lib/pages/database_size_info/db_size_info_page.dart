@@ -13,6 +13,7 @@ class DatabaseInfoPage extends StatefulWidget {
   const DatabaseInfoPage({Key? key}) : super(key: key);
 
   @override
+  // ignore: library_private_types_in_public_api
   _DatabaseInfoPageState createState() => _DatabaseInfoPageState();
 }
 
@@ -43,11 +44,14 @@ class _DatabaseInfoPageState extends State<DatabaseInfoPage>
     );
 
     _animationController.forward();
+    Get.put(StoragePageController());
+    Get.find<StoragePageController>().getTaskFromStorage();
   }
 
   @override
   void dispose() {
     _animationController.dispose();
+
     super.dispose();
   }
 
@@ -75,12 +79,13 @@ class _DatabaseInfoPageState extends State<DatabaseInfoPage>
                   onPressed: () {
                     Get.find<CalendarPageController>()
                         .getTaskFromTaskController();
+
                     Get.back();
                   },
                   icon: const Icon(Icons.arrow_back_ios),
                 ),
                 SimpleText(
-                  text: 'Storage Info',
+                  text: 'Data Storage',
                   sizeText: Dimensions.fontSize20,
                   fontWeight: FontWeight.bold,
                 ),
@@ -285,6 +290,7 @@ class _DatabaseInfoPageState extends State<DatabaseInfoPage>
                         GestureDetector(
                           onTap: () {
                             storagePageController.clearStorage();
+
                             Dialogs.showSnackBar("Cleared successfully");
                           },
                           child: Container(

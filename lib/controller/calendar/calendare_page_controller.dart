@@ -164,4 +164,16 @@ class CalendarPageController extends GetxController {
     calendarController.displayDate = DateTime.now();
     update();
   }
+
+  //////
+  int tapCountViewMonth = 0;
+  void onTapViewMonth() {
+    tapCountViewMonth++;
+    update();
+  }
+
+  void restTapCountViewMonth() {
+    tapCountViewMonth = 0;
+    update();
+  }
 }
