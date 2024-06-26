@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:task_remind_offline/components/loading_custom.dart';
 import 'package:task_remind_offline/controller/calendar/calendare_page_controller.dart';
 import 'package:task_remind_offline/controller/history_page_controller/history_controller.dart';
 import 'package:task_remind_offline/utils/dimensions.dart';
@@ -17,7 +18,11 @@ class HistoryPage extends StatelessWidget {
       child: GetBuilder<HistoryPageController>(
         builder: (historyPageController) {
           return historyPageController.isLoading
-              ? const Center(child: CircularProgressIndicator())
+              ? Container(
+                  color: Colors.white,
+                  width: double.maxFinite,
+                  height: double.maxFinite,
+                  child: const LoadingCustom())
               : Scaffold(
                   backgroundColor: Colors.white,
                   appBar: PreferredSize(
@@ -39,10 +44,10 @@ class HistoryPage extends StatelessWidget {
                           children: [
                             IconButton(
                               onPressed: () {
+                                Get.back();
+
                                 Get.find<CalendarPageController>()
                                     .getTaskFromTaskController();
-
-                                Get.back();
                               },
                               icon: const Icon(Icons.arrow_back_ios),
                             ),

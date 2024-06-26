@@ -7,12 +7,12 @@ class StoragePageController extends GetxController {
 
   List<Task> tasksList = [];
 
-  @override
-  void onInit() {
-    super.onInit();
+  // @override
+  // void onInit() {
+  //   super.onInit();
 
-    getTaskFromStorage();
-  }
+  //   getTaskFromStorage();
+  // }
 
   @override
   // ignore: unnecessary_overrides

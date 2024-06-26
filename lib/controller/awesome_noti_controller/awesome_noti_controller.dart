@@ -2,9 +2,10 @@ import 'dart:convert';
 import 'dart:developer';
 
 import 'package:awesome_notifications/awesome_notifications.dart';
-import 'package:get/get.dart';
+import 'package:flutter/material.dart';
 import 'package:task_remind_offline/models/task_sqlite/task_model.dart';
 import 'package:task_remind_offline/pages/detail_page/detail_page.dart';
+import 'package:task_remind_offline/services/navigation_service.dart';
 
 class NotificationController {
   /// Handle when a new notification or schedule is created
@@ -44,9 +45,9 @@ class NotificationController {
       Map<String, dynamic> taskMap = jsonDecode(taskStr!);
       Task taskObj = Task.fromJson(taskMap);
 
-      // Navigate or perform actions based on the received data
-      Get.to(() => DetailTaskPage(task: taskObj));
-
+      navigatorKey.currentState?.push(
+        MaterialPageRoute(builder: (_) => DetailTaskPage(task: taskObj)),
+      );
       log("Navigated to DetailTaskPage");
     } else {
       log('Payload is null');

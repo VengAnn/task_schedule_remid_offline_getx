@@ -34,6 +34,9 @@ class HistoryPageController extends GetxController {
     update();
     await taskController.getTasks();
 
+    // delay a bit to see loading effect
+    await Future.delayed(const Duration(milliseconds: 500));
+
     for (Task task in taskController.taskList) {
       tasksLs.add(task);
     }

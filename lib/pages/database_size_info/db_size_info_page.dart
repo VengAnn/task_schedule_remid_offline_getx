@@ -57,7 +57,6 @@ class _DatabaseInfoPageState extends State<DatabaseInfoPage>
 
   @override
   Widget build(BuildContext context) {
-    Get.put(StoragePageController());
     return Scaffold(
       appBar: PreferredSize(
         preferredSize: Size(double.maxFinite, Dimensions.height20 * 3),
@@ -291,7 +290,10 @@ class _DatabaseInfoPageState extends State<DatabaseInfoPage>
                           onTap: () {
                             storagePageController.clearStorage();
 
-                            Dialogs.showSnackBar("Cleared successfully");
+                            Dialogs.showSnackBar(
+                              "Cleared successfully",
+                              durationMilliseconds: 700,
+                            );
                           },
                           child: Container(
                             width: double.infinity,

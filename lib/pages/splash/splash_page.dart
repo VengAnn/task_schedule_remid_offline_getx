@@ -5,8 +5,11 @@ import 'package:task_remind_offline/routes/route_helper.dart';
 import 'package:task_remind_offline/services/share_preferences.dart';
 import 'package:task_remind_offline/utils/dimensions.dart';
 
+// ignore: must_be_immutable
 class SplashPage extends StatefulWidget {
-  const SplashPage({super.key});
+  const SplashPage({
+    super.key,
+  });
 
   @override
   State<SplashPage> createState() => _SplashPageState();

@@ -62,6 +62,9 @@ dependencies:
   # for show graph
   fl_chart: ^0.68.0
 
+  # for request allow notification 
+  permission_handler: ^11.3.1
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

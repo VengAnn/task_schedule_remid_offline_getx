@@ -289,9 +289,12 @@ _showBottomSheet_2_field({required BuildContext context, required Task task}) {
                     Get.find<HistoryPageController>().getTaskCompleted();
                     Get.find<HistoryPageController>().getTaskNotCompleted();
                     Get.find<HistoryPageController>().getTaskFromStorage();
-                    Get.back();
 
-                    Dialogs.showSnackBar("Delte task successfully");
+                    Get.back();
+                    Dialogs.showSnackBar(
+                      "Delte task successfully",
+                      durationMilliseconds: 700,
+                    );
                   },
                   text: "Delete Task",
                 ),
@@ -318,7 +321,10 @@ _showBottomSheet_2_field({required BuildContext context, required Task task}) {
                     Get.find<HistoryPageController>().getTaskFromStorage();
                     Get.back();
 
-                    Dialogs.showSnackBar("update to completed successfully");
+                    Dialogs.showSnackBar(
+                      "update to completed successfully",
+                      durationMilliseconds: 700,
+                    );
                   },
                   text: "Update Task to Complete",
                 ),

@@ -5,6 +5,7 @@ import 'package:task_remind_offline/controller/awesome_noti_controller/awesome_n
 import 'package:task_remind_offline/injection.dart';
 import 'package:task_remind_offline/routes/route_helper.dart';
 import 'package:task_remind_offline/services/databaseHelper/database_helper.dart';
+import 'package:task_remind_offline/services/navigation_service.dart';
 import 'package:task_remind_offline/services/share_preferences.dart';
 import 'package:task_remind_offline/translations/app_translate.dart';
 // ignore: depend_on_referenced_packages
@@ -59,8 +60,6 @@ void main() async {
 
 class MyApp extends StatelessWidget {
   final String? selectedLanguage;
-  static final GlobalKey<NavigatorState> navigatorKey =
-      GlobalKey<NavigatorState>();
 
   const MyApp({
     super.key,

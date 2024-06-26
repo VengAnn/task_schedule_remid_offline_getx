@@ -13,7 +13,9 @@ import 'package:task_remind_offline/utils/dimensions.dart';
 import 'package:task_remind_offline/widgets/simple_text.dart';
 
 class CalendarPage extends StatefulWidget {
-  const CalendarPage({super.key});
+  const CalendarPage({
+    super.key,
+  });
 
   @override
   State<CalendarPage> createState() => _CalendarPageState();
@@ -109,11 +111,23 @@ class _CalendarPageState extends State<CalendarPage> {
           ),
         );
       }),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
+      floatingActionButton: GestureDetector(
+        onTap: () {
           _showBottomSheet(context);
         },
-        child: const Icon(Icons.add),
+        child: Container(
+          width: Dimensions.width20 * 3,
+          height: Dimensions.height20 * 3,
+          decoration: BoxDecoration(
+            gradient: const LinearGradient(
+              colors: [Colors.grey, Colors.blue, Colors.deepOrange],
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+            ),
+            borderRadius: BorderRadius.circular(Dimensions.radius10),
+          ),
+          child: const Center(child: Icon(Icons.add)),
+        ),
       ),
     );
   }
@@ -200,6 +214,7 @@ class ShowCalendar extends StatelessWidget {
             // Handle selection change if needed
           },
           dataSource: DataSource(calendarPageController.appointments),
+          headerHeight: Dimensions.height20 * 2.5,
           headerStyle: CalendarHeaderStyle(
             backgroundColor: Colors.transparent,
             textAlign: TextAlign.center,
