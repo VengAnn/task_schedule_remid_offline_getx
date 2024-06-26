@@ -5,11 +5,12 @@ import 'package:task_remind_offline/controller/awesome_noti_controller/awesome_n
 import 'package:task_remind_offline/injection.dart';
 import 'package:task_remind_offline/routes/route_helper.dart';
 import 'package:task_remind_offline/services/databaseHelper/database_helper.dart';
-import 'package:task_remind_offline/services/navigation_service.dart';
 import 'package:task_remind_offline/services/share_preferences.dart';
 import 'package:task_remind_offline/translations/app_translate.dart';
 // ignore: depend_on_referenced_packages
 import 'package:flutter_localizations/flutter_localizations.dart';
+
+final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
 void initializeAwesomeNotification() {
   AwesomeNotifications().initialize(
@@ -99,7 +100,6 @@ class MyApp extends StatelessWidget {
       fallbackLocale: const Locale('en'),
       initialRoute: RouteHelper.getSplashPage(),
       getPages: RouteHelper.routes,
-      //home: const GraphTestShow(),
     );
   }
 }

@@ -3,9 +3,9 @@ import 'dart:developer';
 
 import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:flutter/material.dart';
+import 'package:task_remind_offline/main.dart';
 import 'package:task_remind_offline/models/task_sqlite/task_model.dart';
 import 'package:task_remind_offline/pages/detail_page/detail_page.dart';
-import 'package:task_remind_offline/services/navigation_service.dart';
 
 class NotificationController {
   /// Handle when a new notification or schedule is created
