@@ -234,6 +234,7 @@ class ShowCalendar extends StatelessWidget {
               color: Colors.black,
             ),
           ),
+          // custom hear 7 day
           viewHeaderStyle: ViewHeaderStyle(
             dayTextStyle: TextStyle(
               fontSize: dimensions.fontSize15 / 1.1,
