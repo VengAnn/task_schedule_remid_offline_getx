@@ -143,10 +143,11 @@ class _DialogShowState extends State<DialogShow> {
 
   @override
   Widget build(BuildContext context) {
+    final dimensions = Dimensions(context);
     return Container(
       height: MediaQuery.of(context).size.height * 9,
       color: Colors.white,
-      padding: EdgeInsets.all(Dimensions.width10),
+      padding: EdgeInsets.all(dimensions.width10),
       child: SingleChildScrollView(
         child: Column(
           mainAxisSize: MainAxisSize.min,
@@ -158,7 +159,7 @@ class _DialogShowState extends State<DialogShow> {
                 SimpleText(
                   text:
                       widget.isForUpdate ? "Update Task" : "Create a new Task",
-                  sizeText: Dimensions.fontSize21,
+                  sizeText: dimensions.fontSize21,
                   fontWeight: FontWeight.w600,
                 ),
                 const Spacer(),
@@ -182,7 +183,7 @@ class _DialogShowState extends State<DialogShow> {
               hint: "Enter note here",
               textEditingController: _noteController,
             ),
-            SizedBox(height: Dimensions.height10),
+            SizedBox(height: dimensions.height10),
             // date picker here
             DateOrTimePickerWidget(
               label: "Select Date",
@@ -192,7 +193,7 @@ class _DialogShowState extends State<DialogShow> {
               selectedDateTime: _selectedStartDateTime,
               show: true,
             ),
-            SizedBox(height: Dimensions.height10),
+            SizedBox(height: dimensions.height10),
             //this Row have two expanded start time and end time
             Row(
               children: [
@@ -206,7 +207,7 @@ class _DialogShowState extends State<DialogShow> {
                   ),
                 ),
                 // sizedbox
-                SizedBox(width: Dimensions.width10),
+                SizedBox(width: dimensions.width10),
                 Expanded(
                   child: DateOrTimePickerWidget(
                     label: "End Time",
@@ -242,12 +243,12 @@ class _DialogShowState extends State<DialogShow> {
             ),
 
             // add a bit space
-            SizedBox(height: Dimensions.height20),
+            SizedBox(height: dimensions.height20),
             // btn create new task and color palette
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                _colorPallet(),
+                _colorPallet(dimensions),
                 // button create Task
                 MyButton(
                   label: widget.isForUpdate ? "Update Task" : "Create Task",
@@ -342,13 +343,13 @@ class _DialogShowState extends State<DialogShow> {
   }
 
   // ColorsPallete select
-  _colorPallet() {
+  _colorPallet(Dimensions dimensions) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
           "Color",
-          style: titleStyle,
+          style: titleStyle(dimensions),
         ),
         //select colors
         Wrap(
@@ -356,7 +357,7 @@ class _DialogShowState extends State<DialogShow> {
             3,
             (index) {
               return Padding(
-                padding: EdgeInsets.only(right: Dimensions.width5 / 2),
+                padding: EdgeInsets.only(right: dimensions.width5 / 2),
                 child: GestureDetector(
                   onTap: () {
                     setState(() {
@@ -364,7 +365,7 @@ class _DialogShowState extends State<DialogShow> {
                     });
                   },
                   child: CircleAvatar(
-                    radius: Dimensions.radius15,
+                    radius: dimensions.radius15,
                     backgroundColor: index == 0
                         ? Colors.blue
                         : index == 1
@@ -373,7 +374,7 @@ class _DialogShowState extends State<DialogShow> {
                     child: selectedIndexColor == index
                         ? Icon(
                             Icons.done,
-                            size: Dimensions.height5 * 2.5,
+                            size: dimensions.height5 * 2.5,
                           )
                         : Container(),
                   ),

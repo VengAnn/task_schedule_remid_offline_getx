@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
-import 'package:task_remind_offline/routes/route_helper.dart';
 import 'package:task_remind_offline/services/share_preferences.dart';
 import 'package:task_remind_offline/utils/dimensions.dart';
+
+import '../../routes/route_helper.dart';
 
 // ignore: must_be_immutable
 class SplashPage extends StatefulWidget {
@@ -59,6 +60,8 @@ class _SplashPageState extends State<SplashPage> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
+    final dimensions = Dimensions(context);
+
     return Scaffold(
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -77,7 +80,7 @@ class _SplashPageState extends State<SplashPage> with TickerProviderStateMixin {
               ),
             ),
           ),
-          SizedBox(height: Dimensions.height10),
+          SizedBox(height: dimensions.height10),
           Center(
             child: Text(
               'splash_text'.tr,

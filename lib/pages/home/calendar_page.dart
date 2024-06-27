@@ -26,6 +26,9 @@ class _CalendarPageState extends State<CalendarPage> {
 
   @override
   Widget build(BuildContext context) {
+    final dimensions = Dimensions(context);
+    Get.put(CalendarPageController());
+
     return Scaffold(
       key: _scaffoldKey,
       drawer: const MyDrawer(),
@@ -38,7 +41,7 @@ class _CalendarPageState extends State<CalendarPage> {
                 children: [
                   //
                   Container(
-                    height: Dimensions.height20 * 2.7,
+                    height: dimensions.height20 * 2.7,
                     width: double.maxFinite,
                     decoration: BoxDecoration(
                       gradient: LinearGradient(
@@ -63,7 +66,7 @@ class _CalendarPageState extends State<CalendarPage> {
                           'title_appbar_text'.tr,
                           style: TextStyle(
                             color: Colors.black,
-                            fontSize: Dimensions.fontSize20,
+                            fontSize: dimensions.fontSize20,
                             fontWeight: FontWeight.w600,
                           ),
                         ),
@@ -73,19 +76,19 @@ class _CalendarPageState extends State<CalendarPage> {
                               calendarPageController.jumpToToday();
                             },
                             child: CircleAvatar(
-                              radius: Dimensions.radius20 * 1.2,
+                              radius: dimensions.radius20 * 1.2,
                               backgroundColor: Colors.blue,
                               child: CircleAvatar(
                                 backgroundColor: Colors.deepOrange,
-                                radius: Dimensions.radius15 * 1.2,
+                                radius: dimensions.radius15 * 1.2,
                                 child: SimpleText(
                                   text: "text_Today".tr,
-                                  sizeText: Dimensions.fontSize15 / 1.4,
+                                  sizeText: dimensions.fontSize15 / 1.4,
                                   fontWeight: FontWeight.w700,
                                 ),
                               ),
                             )),
-                        SizedBox(width: Dimensions.width10),
+                        SizedBox(width: dimensions.width10),
                       ],
                     ),
                   ),
@@ -116,15 +119,15 @@ class _CalendarPageState extends State<CalendarPage> {
           _showBottomSheet(context);
         },
         child: Container(
-          width: Dimensions.width20 * 3,
-          height: Dimensions.height20 * 3,
+          width: dimensions.width20 * 3,
+          height: dimensions.height20 * 3,
           decoration: BoxDecoration(
             gradient: const LinearGradient(
               colors: [Colors.grey, Colors.blue, Colors.deepOrange],
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,
             ),
-            borderRadius: BorderRadius.circular(Dimensions.radius10),
+            borderRadius: BorderRadius.circular(dimensions.radius10),
           ),
           child: const Center(child: Icon(Icons.add)),
         ),
@@ -141,6 +144,12 @@ class ShowCalendar extends StatelessWidget {
   void calendarTapped(CalendarTapDetails calendarTapDetails) {
     if (calendarTapDetails.targetElement == CalendarElement.appointment) {
       Appointment appointment = calendarTapDetails.appointments![0];
+
+      // ignore: unnecessary_null_comparison
+      if (appointment == null) {
+        log("No appointments found.");
+        return;
+      }
 
       List<Object>? listObj = appointment.resourceIds;
 
@@ -170,6 +179,7 @@ class ShowCalendar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final dimensions = Dimensions(context);
     return GetBuilder<CalendarPageController>(
       builder: (calendarPageController) {
         return SfCalendar(
@@ -190,7 +200,7 @@ class ShowCalendar extends StatelessWidget {
                       return SingleChildScrollView(
                         controller: scrollController,
                         child: Container(
-                          height: Dimensions.screenHeight,
+                          height: dimensions.screenHeight,
                           color: Colors.transparent,
                           child: const DialogShow(),
                         ),
@@ -214,40 +224,40 @@ class ShowCalendar extends StatelessWidget {
             // Handle selection change if needed
           },
           dataSource: DataSource(calendarPageController.appointments),
-          headerHeight: Dimensions.height20 * 2.5,
+          headerHeight: dimensions.height20 * 2.5,
           headerStyle: CalendarHeaderStyle(
             backgroundColor: Colors.transparent,
             textAlign: TextAlign.center,
             textStyle: TextStyle(
-              fontSize: Dimensions.fontSize20,
+              fontSize: dimensions.fontSize20,
               fontWeight: FontWeight.bold,
               color: Colors.black,
             ),
           ),
           viewHeaderStyle: ViewHeaderStyle(
             dayTextStyle: TextStyle(
-              fontSize: Dimensions.fontSize15,
+              fontSize: dimensions.fontSize15 / 1.1,
               fontWeight: FontWeight.bold,
               color: Colors.blue,
             ),
             dateTextStyle: TextStyle(
-              fontSize: Dimensions.fontSize15,
+              fontSize: dimensions.fontSize15 / 1.1,
               color: Colors.red,
             ),
           ),
           monthViewSettings: MonthViewSettings(
             appointmentDisplayMode: MonthAppointmentDisplayMode.indicator,
             showAgenda: true,
-            agendaViewHeight: Dimensions.height20 * 15,
+            agendaViewHeight: dimensions.height20 * 13,
             agendaStyle: AgendaStyle(
               backgroundColor: Colors.blue[200],
               dayTextStyle: TextStyle(
-                fontSize: Dimensions.fontSize15,
+                fontSize: dimensions.fontSize15,
                 fontWeight: FontWeight.bold,
                 color: Colors.black,
               ),
               dateTextStyle: TextStyle(
-                fontSize: Dimensions.fontSize15,
+                fontSize: dimensions.fontSize15,
                 fontWeight: FontWeight.w600,
                 color: Colors.black87,
               ),
@@ -273,7 +283,7 @@ class DataSource extends CalendarDataSource {
 
 //
 // ignore: unused_element
-void _showSettingsDialog(BuildContext context) {
+void _showSettingsDialog(BuildContext context, Dimensions dimensions) {
   showDialog(
     context: context,
     builder: (BuildContext context) {
@@ -282,7 +292,7 @@ void _showSettingsDialog(BuildContext context) {
           width: double.infinity,
           decoration: BoxDecoration(
             color: Colors.white,
-            borderRadius: BorderRadius.circular(Dimensions.width10),
+            borderRadius: BorderRadius.circular(dimensions.width10),
             boxShadow: [
               BoxShadow(
                 color: Colors.black.withOpacity(0.1),
@@ -322,7 +332,7 @@ void _showSettingsDialog(BuildContext context) {
                 ],
               ),
               Positioned(
-                right: Dimensions.width5,
+                right: dimensions.width5,
                 child: InkWell(
                   onTap: () {
                     Get.back();

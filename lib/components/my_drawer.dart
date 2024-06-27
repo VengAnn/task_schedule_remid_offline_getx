@@ -11,9 +11,11 @@ class MyDrawer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final dimensions = Dimensions(context);
+
     return SafeArea(
       child: Drawer(
-        width: Dimensions.width20 * 17,
+        width: dimensions.width20 * 17,
         backgroundColor: Colors.white,
         child: SingleChildScrollView(
           child: Column(
@@ -21,12 +23,12 @@ class MyDrawer extends StatelessWidget {
               //logo header
               Padding(
                 padding: EdgeInsets.only(
-                  top: Dimensions.width20 * 2,
-                  left: Dimensions.width10,
+                  top: dimensions.width20 * 2,
+                  left: dimensions.width10,
                 ),
                 child: Center(
                   child: Image(
-                    width: Dimensions.width20 * 10,
+                    width: dimensions.width20 * 10,
                     image: const AssetImage("assets/images/calendar.gif"),
                   ),
                 ),
@@ -34,8 +36,8 @@ class MyDrawer extends StatelessWidget {
               // Divider
               Padding(
                 padding: EdgeInsets.symmetric(
-                    horizontal: Dimensions.width20,
-                    vertical: Dimensions.height20),
+                    horizontal: dimensions.width20,
+                    vertical: dimensions.height20),
                 child: const Divider(
                   thickness: 2,
                 ),

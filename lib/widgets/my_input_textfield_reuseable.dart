@@ -16,20 +16,22 @@ class MyInputTextFieldReusable extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final dimensions = Dimensions(context);
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
           title,
-          style: titleStyle,
+          style: titleStyle(dimensions),
         ),
-        SizedBox(height: Dimensions.height5),
+        SizedBox(height: dimensions.height5),
         // Container
         Container(
-          height: Dimensions.height20 * 2,
+          height: dimensions.height20 * 2,
           decoration: BoxDecoration(
             color: Colors.white,
-            borderRadius: BorderRadius.circular(Dimensions.radius15),
+            borderRadius: BorderRadius.circular(dimensions.radius15),
             border: Border.all(
               color: Colors.grey,
               width: 1.0,
@@ -49,10 +51,10 @@ class MyInputTextFieldReusable extends StatelessWidget {
                   autofocus: false,
                   cursorColor: Colors.grey[600],
                   controller: textEditingController,
-                  style: subTitleStyle,
+                  style: subTitleStyle(dimensions),
                   decoration: InputDecoration(
                     hintText: hint,
-                    hintStyle: subTitleStyle,
+                    hintStyle: subTitleStyle(dimensions),
                     focusedBorder: const OutlineInputBorder(
                       borderSide: BorderSide.none,
                     ),
@@ -60,7 +62,7 @@ class MyInputTextFieldReusable extends StatelessWidget {
                       borderSide: BorderSide.none,
                     ),
                     contentPadding: EdgeInsets.symmetric(
-                      horizontal: Dimensions.width10,
+                      horizontal: dimensions.width10,
                     ),
                   ),
                 ),

@@ -28,6 +28,8 @@ class TextFormFieldWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final dimensions = Dimensions(context);
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -44,7 +46,7 @@ class TextFormFieldWidget extends StatelessWidget {
               decoration: BoxDecoration(
                 color: Colors.grey.shade200,
                 borderRadius: BorderRadius.all(
-                  Radius.circular(Dimensions.radius15),
+                  Radius.circular(dimensions.radius15),
                 ),
               ),
               child: TextFormField(
@@ -54,7 +56,7 @@ class TextFormFieldWidget extends StatelessWidget {
                   prefixIcon: Icon(icon),
                   hintText: hintText,
                   contentPadding: EdgeInsets.symmetric(
-                    vertical: Dimensions.width10,
+                    vertical: dimensions.width10,
                   ),
                   suffixIcon: showIconSuffix == true
                       ? GestureDetector(
@@ -69,8 +71,8 @@ class TextFormFieldWidget extends StatelessWidget {
             // Show validation message when button is tapped
             Padding(
               padding: EdgeInsets.only(
-                left: Dimensions.width10,
-                top: Dimensions.height5,
+                left: dimensions.width10,
+                top: dimensions.height5,
               ),
             ),
           ],

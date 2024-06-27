@@ -13,19 +13,21 @@ class MyButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final dimensions = Dimensions(context);
+
     return GestureDetector(
       onTap: ontap,
       child: Container(
-        width: Dimensions.width20 * 5,
-        height: Dimensions.height20 * 2,
+        width: dimensions.width20 * 5,
+        height: dimensions.height20 * 2,
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(Dimensions.radius10),
+          borderRadius: BorderRadius.circular(dimensions.radius10),
           color: Colors.blue,
         ),
         child: Center(
           child: Text(
             label,
-            style: styleColorWhite,
+            style: styleColorWhite(context),
           ),
         ),
       ),

@@ -35,11 +35,13 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
 
   @override
   Widget build(BuildContext context) {
+    final dimensions = Dimensions(context);
+
     return Scaffold(
       body: Stack(
         children: [
           SizedBox(
-            height: Dimensions.screenHeight,
+            height: dimensions.screenHeight,
             child: PageView(
               controller: _pageController,
               scrollDirection: Axis.horizontal,
@@ -56,7 +58,7 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
             ),
           ),
           Positioned(
-            bottom: Dimensions.height10 * 2,
+            bottom: dimensions.height10 * 2,
             right: 0,
             left: 0,
             child: Container(
@@ -68,16 +70,16 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
                   3,
                   (index) => Container(
                     width: _currentPage == index
-                        ? Dimensions.width20
-                        : Dimensions.width10,
-                    height: Dimensions.height10,
+                        ? dimensions.width20
+                        : dimensions.width10,
+                    height: dimensions.height10,
                     decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(Dimensions.radius10),
+                      borderRadius: BorderRadius.circular(dimensions.radius10),
                       color: index == _currentPage
                           ? AppColor.colorAmber
                           : AppColor.colorWhite,
                     ),
-                    margin: EdgeInsets.only(right: Dimensions.width10 / 2),
+                    margin: EdgeInsets.only(right: dimensions.width10 / 2),
                   ),
                 ),
               ),
@@ -86,7 +88,7 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
           // if laset page view show what i want text
           _currentPage == 2
               ? Positioned(
-                  bottom: Dimensions.height10 * 3,
+                  bottom: dimensions.height10 * 3,
                   right: 10,
                   child: InkWell(
                     onTap: () {
@@ -97,7 +99,7 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
                     child: SimpleText(
                       // this text continue to the calendar page
                       text: 'elevated_text'.tr,
-                      sizeText: Dimensions.fontSize20,
+                      sizeText: dimensions.fontSize20,
                       textColor: AppColor.colorBlack,
                       fontWeight: FontWeight.bold,
                     ),

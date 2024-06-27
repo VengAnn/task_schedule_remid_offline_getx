@@ -12,6 +12,8 @@ class HistoryPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final dimensions = Dimensions(context);
+
     Get.put(HistoryPageController());
     return DefaultTabController(
       length: 2,
@@ -27,7 +29,7 @@ class HistoryPage extends StatelessWidget {
                   backgroundColor: Colors.white,
                   appBar: PreferredSize(
                     preferredSize:
-                        Size(double.maxFinite, Dimensions.height20 * 3),
+                        Size(double.maxFinite, dimensions.height20 * 3),
                     child: SafeArea(
                       child: Container(
                         decoration: BoxDecoration(
@@ -53,7 +55,7 @@ class HistoryPage extends StatelessWidget {
                             ),
                             SimpleText(
                               text: 'title_text_histroy'.tr,
-                              sizeText: Dimensions.fontSize20,
+                              sizeText: dimensions.fontSize20,
                               fontWeight: FontWeight.bold,
                             ),
                           ],
@@ -67,7 +69,7 @@ class HistoryPage extends StatelessWidget {
                       child: Column(
                         children: [
                           Container(
-                            height: Dimensions.height20 * 2,
+                            height: dimensions.height20 * 2,
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(20),
                               color: Colors.grey[200],

@@ -19,10 +19,12 @@ class SimpleText extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final dimensions = Dimensions(context);
+
     return Text(
       text,
       style: TextStyle(
-        fontSize: sizeText ?? Dimensions.fontSize20 / 1.5,
+        fontSize: sizeText ?? dimensions.fontSize20 / 1.5,
         fontWeight: fontWeight,
         color: textColor ?? Colors.black,
       ),

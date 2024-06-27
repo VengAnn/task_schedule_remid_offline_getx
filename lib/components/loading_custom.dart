@@ -7,6 +7,8 @@ class LoadingCustom extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final dimensions = Dimensions(context);
+
     return Scaffold(
       body: SingleChildScrollView(
         physics: const NeverScrollableScrollPhysics(),
@@ -25,7 +27,7 @@ class LoadingCustom extends StatelessWidget {
               child: Center(
                 child: LoadingAnimationWidget.dotsTriangle(
                   color: Colors.white,
-                  size: Dimensions.width20 * 4,
+                  size: dimensions.width20 * 4,
                 ),
               ),
             ),

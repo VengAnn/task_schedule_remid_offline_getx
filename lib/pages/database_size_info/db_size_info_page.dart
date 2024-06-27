@@ -57,9 +57,11 @@ class _DatabaseInfoPageState extends State<DatabaseInfoPage>
 
   @override
   Widget build(BuildContext context) {
+    final dimensions = Dimensions(context);
+
     return Scaffold(
       appBar: PreferredSize(
-        preferredSize: Size(double.maxFinite, Dimensions.height20 * 3),
+        preferredSize: Size(double.maxFinite, dimensions.height20 * 3),
         child: SafeArea(
           child: Container(
             decoration: BoxDecoration(
@@ -85,7 +87,7 @@ class _DatabaseInfoPageState extends State<DatabaseInfoPage>
                 ),
                 SimpleText(
                   text: 'Data Storage',
-                  sizeText: Dimensions.fontSize20,
+                  sizeText: dimensions.fontSize20,
                   fontWeight: FontWeight.bold,
                 ),
               ],
@@ -126,7 +128,7 @@ class _DatabaseInfoPageState extends State<DatabaseInfoPage>
                         children: [
                           SizedBox(
                             width: double.maxFinite,
-                            height: Dimensions.height20 * 10,
+                            height: dimensions.height20 * 10,
                             child: PieChart(
                               PieChartData(
                                 pieTouchData: PieTouchData(
@@ -152,11 +154,9 @@ class _DatabaseInfoPageState extends State<DatabaseInfoPage>
                                 centerSpaceRadius: 40,
                                 sections:
                                     storagePageController.tasksList.isNotEmpty
-                                        ? showingSections(
-                                            percentCompleted,
-                                            percentNotCompleted,
-                                          )
-                                        : defaultSection(),
+                                        ? showingSections(percentCompleted,
+                                            percentNotCompleted, dimensions)
+                                        : defaultSection(dimensions),
                               ),
                             ),
                           ),
@@ -175,7 +175,7 @@ class _DatabaseInfoPageState extends State<DatabaseInfoPage>
                                 return Text(
                                   '$sizeText MB',
                                   style: TextStyle(
-                                    fontSize: Dimensions.fontSize15 / 1.2,
+                                    fontSize: dimensions.fontSize15 / 1.2,
                                     fontWeight: FontWeight.bold,
                                   ),
                                 );
@@ -188,21 +188,21 @@ class _DatabaseInfoPageState extends State<DatabaseInfoPage>
                   ),
                   Padding(
                     padding: EdgeInsets.only(
-                      left: Dimensions.height20,
-                      right: Dimensions.height20,
+                      left: dimensions.height20,
+                      right: dimensions.height20,
                     ),
                     child: SizedBox(
-                      width: Dimensions.width20 * 9,
-                      height: Dimensions.height20 * 10,
+                      width: dimensions.width20 * 9,
+                      height: dimensions.height20 * 10,
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           _buildIndicator(Colors.yellow, 'Task completed',
-                              percentCompleted),
-                          SizedBox(height: Dimensions.height5),
+                              percentCompleted, dimensions),
+                          SizedBox(height: dimensions.height5),
                           _buildIndicator(Colors.red, 'Task not completed',
-                              percentNotCompleted),
+                              percentNotCompleted, dimensions),
                         ],
                       ),
                     ),
@@ -211,81 +211,81 @@ class _DatabaseInfoPageState extends State<DatabaseInfoPage>
               ),
               Padding(
                 padding: EdgeInsets.only(
-                  left: Dimensions.height20,
-                  right: Dimensions.height20,
+                  left: dimensions.height20,
+                  right: dimensions.height20,
                 ),
                 child: Container(
                   width: double.maxFinite,
-                  height: Dimensions.height20 * 9,
+                  height: dimensions.height20 * 10,
                   decoration: BoxDecoration(
                     gradient: LinearGradient(colors: [
                       Colors.blue.withOpacity(0.7),
                       Colors.blue.withOpacity(0.3),
                     ], begin: Alignment.topLeft, end: Alignment.bottomRight),
-                    borderRadius: BorderRadius.circular(Dimensions.radius10),
+                    borderRadius: BorderRadius.circular(dimensions.radius10),
                   ),
                   child: Padding(
-                    padding: EdgeInsets.all(Dimensions.width10),
+                    padding: EdgeInsets.all(dimensions.width10),
                     child: Column(
                       children: [
                         Row(
                           children: [
                             CircleAvatar(
-                              radius: Dimensions.radius15,
+                              radius: dimensions.radius15,
                               backgroundColor: Colors.yellow,
                               child: const Icon(Icons.done),
                             ),
-                            SizedBox(width: Dimensions.width5),
+                            SizedBox(width: dimensions.width5),
                             const SimpleText(
                               text: "Task completed",
                               fontWeight: FontWeight.w700,
                             ),
-                            SizedBox(width: Dimensions.width10),
+                            SizedBox(width: dimensions.width10),
                             SimpleText(
                               text: "${percentCompleted.toStringAsFixed(1)}%",
                             ),
                           ],
                         ),
-                        SizedBox(height: Dimensions.height5),
+                        SizedBox(height: dimensions.height5),
                         Row(
                           children: [
                             CircleAvatar(
-                              radius: Dimensions.radius15,
+                              radius: dimensions.radius15,
                               backgroundColor: Colors.red,
                               child: const Icon(Icons.done),
                             ),
-                            SizedBox(width: Dimensions.width5),
+                            SizedBox(width: dimensions.width5),
                             const SimpleText(
                               text: "Task not completed",
                               fontWeight: FontWeight.w700,
                             ),
-                            SizedBox(width: Dimensions.width10),
+                            SizedBox(width: dimensions.width10),
                             SimpleText(
                               text:
                                   "${percentNotCompleted.toStringAsFixed(1)}%",
                             ),
                           ],
                         ),
-                        SizedBox(height: Dimensions.height5),
+                        SizedBox(height: dimensions.height5),
                         Row(
                           children: [
                             CircleAvatar(
-                              radius: Dimensions.radius15,
+                              radius: dimensions.radius15,
                               backgroundColor: Colors.blue,
                               child: const Icon(Icons.done),
                             ),
-                            SizedBox(width: Dimensions.width5),
+                            SizedBox(width: dimensions.width5),
                             const SimpleText(
                               text: "Total Tasks",
                               fontWeight: FontWeight.w700,
                             ),
-                            SizedBox(width: Dimensions.width10),
+                            SizedBox(width: dimensions.width10),
                             SimpleText(
                               text: "$totalTasks",
                             ),
                           ],
                         ),
-                        SizedBox(height: Dimensions.height5),
+                        SizedBox(height: dimensions.height5),
                         GestureDetector(
                           onTap: () {
                             storagePageController.clearStorage();
@@ -297,11 +297,11 @@ class _DatabaseInfoPageState extends State<DatabaseInfoPage>
                           },
                           child: Container(
                             width: double.infinity,
-                            height: Dimensions.height20 * 2,
+                            height: dimensions.height20 * 2.3,
                             decoration: BoxDecoration(
                               color: Colors.red,
                               borderRadius:
-                                  BorderRadius.circular(Dimensions.radius10),
+                                  BorderRadius.circular(dimensions.radius10),
                             ),
                             child: const Center(
                               child: SimpleText(
@@ -323,14 +323,14 @@ class _DatabaseInfoPageState extends State<DatabaseInfoPage>
     );
   }
 
-  List<PieChartSectionData> showingSections(
-      double percentCompleted, double percentNotCompleted) {
+  List<PieChartSectionData> showingSections(double percentCompleted,
+      double percentNotCompleted, Dimensions dimensions) {
     return List.generate(2, (i) {
       final isTouched = i == touchedIndex;
       final double fontSize =
-          isTouched ? Dimensions.fontSize15 : Dimensions.fontSize15;
+          isTouched ? dimensions.fontSize15 : dimensions.fontSize15;
       final double radius =
-          isTouched ? Dimensions.radius20 * 3 : Dimensions.radius20 * 2;
+          isTouched ? dimensions.radius20 * 3 : dimensions.radius20 * 2;
 
       switch (i) {
         case 0:
@@ -370,15 +370,15 @@ class _DatabaseInfoPageState extends State<DatabaseInfoPage>
     });
   }
 
-  List<PieChartSectionData> defaultSection() {
+  List<PieChartSectionData> defaultSection(Dimensions dimensions) {
     return [
       PieChartSectionData(
         color: Colors.grey,
         value: 100,
         title: 'No Data',
-        radius: Dimensions.radius20 * 2,
+        radius: dimensions.radius20 * 2,
         titleStyle: TextStyle(
-          fontSize: Dimensions.fontSize15,
+          fontSize: dimensions.fontSize15,
           fontWeight: FontWeight.bold,
           color: Colors.black,
           shadows: const [
@@ -389,15 +389,16 @@ class _DatabaseInfoPageState extends State<DatabaseInfoPage>
     ];
   }
 
-  Widget _buildIndicator(Color color, String text, double percent) {
+  Widget _buildIndicator(
+      Color color, String text, double percent, Dimensions dimensions) {
     return Row(
       children: [
         Container(
-          width: Dimensions.width20,
-          height: Dimensions.height20,
+          width: dimensions.width20,
+          height: dimensions.height20,
           color: color,
         ),
-        SizedBox(width: Dimensions.width10),
+        SizedBox(width: dimensions.width10),
         Expanded(
           child: Text(
             '$text: ${percent.toStringAsFixed(1)}%',

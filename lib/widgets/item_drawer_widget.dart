@@ -24,10 +24,12 @@ class _ItemDrawerWidgetState extends State<ItemDrawerWidget> {
 
   @override
   Widget build(BuildContext context) {
+    final dimensions = Dimensions(context);
+
     return Padding(
       padding: EdgeInsets.only(
-        left: Dimensions.width20,
-        right: Dimensions.width20,
+        left: dimensions.width20,
+        right: dimensions.width20,
       ),
       child: GestureDetector(
         onTap: () {
@@ -43,7 +45,7 @@ class _ItemDrawerWidgetState extends State<ItemDrawerWidget> {
           children: [
             SizedBox(
               width: double.maxFinite,
-              height: Dimensions.height20 * 2,
+              height: dimensions.height20 * 2,
               child: Container(
                 width: double.maxFinite,
                 decoration: BoxDecoration(
@@ -58,7 +60,7 @@ class _ItemDrawerWidgetState extends State<ItemDrawerWidget> {
                           end: Alignment.centerRight,
                         )
                       : null,
-                  borderRadius: BorderRadius.circular(Dimensions.radius10),
+                  borderRadius: BorderRadius.circular(dimensions.radius10),
                 ),
                 child: Row(
                   children: [
@@ -66,10 +68,10 @@ class _ItemDrawerWidgetState extends State<ItemDrawerWidget> {
                       widget.icon,
                       color: _isTapped ? Colors.black : Colors.black,
                     ),
-                    SizedBox(width: Dimensions.width20),
+                    SizedBox(width: dimensions.width20),
                     SimpleText(
                       text: widget.text,
-                      sizeText: Dimensions.fontSize15,
+                      sizeText: dimensions.fontSize15,
                       textColor: _isTapped ? Colors.black : Colors.black,
                     ),
                   ],
@@ -78,7 +80,7 @@ class _ItemDrawerWidgetState extends State<ItemDrawerWidget> {
             ),
             Padding(
               padding: EdgeInsets.only(
-                left: Dimensions.width20 * 2,
+                left: dimensions.width20 * 2,
               ),
               child: Divider(
                 thickness: 1,

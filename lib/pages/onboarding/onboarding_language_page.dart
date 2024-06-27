@@ -18,15 +18,16 @@ class OnBoardingLanguagePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Get.put(OnboardingController());
+    final dimensions = Dimensions(context);
 
     return Scaffold(
       body: GetBuilder<OnboardingController>(
         builder: (onboardingController) {
           return Padding(
-            padding: EdgeInsets.all(Dimensions.width20 / 1.5),
+            padding: EdgeInsets.all(dimensions.width20 / 1.5),
             child: SingleChildScrollView(
               child: SizedBox(
-                height: MediaQuery.of(context).size.height,
+                height: dimensions.screenHeight,
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
@@ -34,86 +35,91 @@ class OnBoardingLanguagePage extends StatelessWidget {
                     SimpleText(
                       text: 'onboarding_primary_title'.tr,
                       fontWeight: FontWeight.bold,
-                      sizeText: Dimensions.fontSize20,
+                      sizeText: dimensions.fontSize21,
                     ),
                     SimpleText(
                       text: 'onboarding_secondary_title'.tr,
                       fontWeight: FontWeight.bold,
-                      sizeText: Dimensions.fontSize15,
+                      sizeText: dimensions.fontSize15,
                     ),
-                    SizedBox(height: Dimensions.height10),
+                    SizedBox(height: dimensions.height10),
                     Container(
-                      width: Dimensions.width20 * 13.5,
-                      //height: Dimensions.height20 * 25,
+                      width: dimensions.width20 * 13.5,
+                      height: dimensions.height20 * 13,
                       decoration: BoxDecoration(
                         color: Colors.white,
                         borderRadius:
-                            BorderRadius.circular(Dimensions.radius10),
+                            BorderRadius.circular(dimensions.radius10),
                       ),
                       child: Padding(
                         padding: EdgeInsets.symmetric(
-                          vertical: Dimensions.height5,
+                          vertical: dimensions.height5,
                         ),
-                        child: Column(
-                          children: [
-                            Row(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                LanguageOption(
-                                  onTap: () async {
-                                    onboardingController
-                                        .setSelectedLanguage("vi");
-                                    SharedPreferencesService
-                                        .saveSelectedLanguage("vi");
-                                    Get.updateLocale(
-                                      const Locale('vi'),
-                                    );
-                                  },
-                                  textLanguage: "Tiếng việt",
-                                  sizeText: Dimensions.fontSize15,
-                                  imagePath: "assets/images/vietnam.png",
-                                  isSelected:
-                                      onboardingController.selectedLanguage ==
-                                          "vi",
-                                ),
-                                LanguageOption(
-                                  onTap: () async {
-                                    onboardingController
-                                        .setSelectedLanguage("en");
-                                    SharedPreferencesService
-                                        .saveSelectedLanguage("en");
-                                    Get.updateLocale(const Locale('en'));
-                                  },
-                                  textLanguage: "English",
-                                  sizeText: Dimensions.fontSize15,
-                                  imagePath: "assets/images/united-kingdom.png",
-                                  isSelected:
-                                      onboardingController.selectedLanguage ==
-                                          "en",
-                                ),
-                              ],
-                            ),
-                            // cambodia flag
-                            Row(
-                              children: [
-                                LanguageOption(
-                                  onTap: () async {
-                                    onboardingController
-                                        .setSelectedLanguage("km");
-                                    SharedPreferencesService
-                                        .saveSelectedLanguage("km");
-                                    Get.updateLocale(const Locale('km'));
-                                  },
-                                  textLanguage: "Khmer",
-                                  sizeText: Dimensions.fontSize15,
-                                  imagePath: "assets/images/cambodia_flag.png",
-                                  isSelected:
-                                      onboardingController.selectedLanguage ==
-                                          "km",
-                                ),
-                              ],
-                            ),
-                          ],
+                        child: SingleChildScrollView(
+                          // physics: const NeverScrollableScrollPhysics(),
+                          child: Column(
+                            children: [
+                              Row(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  LanguageOption(
+                                    onTap: () async {
+                                      onboardingController
+                                          .setSelectedLanguage("vi");
+                                      SharedPreferencesService
+                                          .saveSelectedLanguage("vi");
+                                      Get.updateLocale(
+                                        const Locale('vi'),
+                                      );
+                                    },
+                                    textLanguage: "Tiếng việt",
+                                    sizeText: dimensions.fontSize15,
+                                    imagePath: "assets/images/vietnam.png",
+                                    isSelected:
+                                        onboardingController.selectedLanguage ==
+                                            "vi",
+                                  ),
+                                  LanguageOption(
+                                    onTap: () async {
+                                      onboardingController
+                                          .setSelectedLanguage("en");
+                                      SharedPreferencesService
+                                          .saveSelectedLanguage("en");
+                                      Get.updateLocale(const Locale('en'));
+                                    },
+                                    textLanguage: "English",
+                                    sizeText: dimensions.fontSize15,
+                                    imagePath:
+                                        "assets/images/united-kingdom.png",
+                                    isSelected:
+                                        onboardingController.selectedLanguage ==
+                                            "en",
+                                  ),
+                                ],
+                              ),
+                              // cambodia flag
+                              Row(
+                                children: [
+                                  LanguageOption(
+                                    onTap: () async {
+                                      onboardingController
+                                          .setSelectedLanguage("km");
+                                      SharedPreferencesService
+                                          .saveSelectedLanguage("km");
+                                      Get.updateLocale(const Locale('km'));
+                                    },
+                                    textLanguage: "Khmer",
+                                    sizeText: dimensions.fontSize15,
+                                    imagePath:
+                                        "assets/images/cambodia_flag.png",
+                                    isSelected:
+                                        onboardingController.selectedLanguage ==
+                                            "km",
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
                         ),
                       ),
                     ),
@@ -131,20 +137,20 @@ class OnBoardingLanguagePage extends StatelessWidget {
                               }
                             },
                             child: Container(
-                              height: Dimensions.height20 * 2,
+                              height: dimensions.height20 * 2,
                               decoration: BoxDecoration(
                                 gradient: const LinearGradient(
                                   colors: [Colors.blue, Colors.green],
                                 ),
                                 borderRadius: BorderRadius.circular(
-                                  Dimensions.radius15 * 1.5,
+                                  dimensions.radius15 * 1.5,
                                 ),
                               ),
                               child: Center(
                                 child: SimpleText(
                                   text: 'elevated_text'.tr,
                                   fontWeight: FontWeight.bold,
-                                  sizeText: Dimensions.fontSize20,
+                                  sizeText: dimensions.fontSize15,
                                   textColor: Colors.black,
                                 ),
                               ),
@@ -153,7 +159,7 @@ class OnBoardingLanguagePage extends StatelessWidget {
                         ),
                       ],
                     ),
-                    SizedBox(height: Dimensions.height20 * 1.4),
+                    SizedBox(height: dimensions.height20 * 1.4),
                   ],
                 ),
               ),

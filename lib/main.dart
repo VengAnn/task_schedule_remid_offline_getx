@@ -1,14 +1,14 @@
 import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:task_remind_offline/controller/awesome_noti_controller/awesome_noti_controller.dart';
-import 'package:task_remind_offline/injection.dart';
 import 'package:task_remind_offline/routes/route_helper.dart';
 import 'package:task_remind_offline/services/databaseHelper/database_helper.dart';
 import 'package:task_remind_offline/services/share_preferences.dart';
 import 'package:task_remind_offline/translations/app_translate.dart';
 // ignore: depend_on_referenced_packages
 import 'package:flutter_localizations/flutter_localizations.dart';
+
+import 'controller/awesome_noti_controller/awesome_noti_controller.dart';
 
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
@@ -27,13 +27,21 @@ void initializeAwesomeNotification() {
       ),
     ],
   );
+
+  //
+  AwesomeNotifications().isNotificationAllowed().then(
+    (isAllowed) async {
+      if (!isAllowed) {
+        AwesomeNotifications().requestPermissionToSendNotifications();
+      }
+    },
+  );
 }
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   initializeAwesomeNotification();
-  await init_Dependency_Injection(); // initialize the dependencies getx
-  //await _initializeFirebare();
+  // await init_Dependency_Injection(); // initialize the dependencies getx
   await DBHelper.initDb(); // this initialize sqflite
   await SharedPreferencesService.init(); // this SharedPreferences
 

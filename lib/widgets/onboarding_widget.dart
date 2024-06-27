@@ -15,14 +15,16 @@ class OnBoardingWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final dimensions = Dimensions(context);
+
     return Scaffold(
       body: SingleChildScrollView(
         child: Stack(
           clipBehavior: Clip.none,
           children: [
             Container(
-              width: Dimensions.screenWidth,
-              height: Dimensions.screenHeight,
+              width: dimensions.screenWidth,
+              height: dimensions.screenHeight,
               decoration: const BoxDecoration(
                 gradient: LinearGradient(
                   colors: [
@@ -33,10 +35,10 @@ class OnBoardingWidget extends StatelessWidget {
               ),
             ),
             Positioned(
-              top: Dimensions.screenHeight / 3.5,
+              top: dimensions.screenHeight / 3.5,
               child: Container(
-                width: Dimensions.screenWidth,
-                height: Dimensions.height20 * 15,
+                width: dimensions.screenWidth,
+                height: dimensions.height20 * 15,
                 decoration: const BoxDecoration(
                   gradient: LinearGradient(
                     colors: [
@@ -52,12 +54,12 @@ class OnBoardingWidget extends StatelessWidget {
               ),
             ),
             Container(
-              width: Dimensions.screenWidth,
-              height: Dimensions.screenHeight / 2,
+              width: dimensions.screenWidth,
+              height: dimensions.screenHeight / 2,
               decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.only(
-                  bottomLeft: Radius.circular(Dimensions.height20 * 10),
+                  bottomLeft: Radius.circular(dimensions.height20 * 10),
                   bottomRight: const Radius.elliptical(10, 10),
                 ),
               ),
@@ -67,14 +69,14 @@ class OnBoardingWidget extends StatelessWidget {
                 children: [
                   Padding(
                     padding: EdgeInsets.only(
-                      right: Dimensions.width10,
-                      bottom: Dimensions.height10 * 2,
+                      right: dimensions.width10,
+                      bottom: dimensions.height10 * 2,
                     ),
                     child: ClipRRect(
-                      borderRadius: BorderRadius.circular(Dimensions.radius15),
+                      borderRadius: BorderRadius.circular(dimensions.radius15),
                       child: Image.asset(
                         imageAsset,
-                        width: Dimensions.height20 * 14,
+                        width: dimensions.height20 * 14,
                         fit: BoxFit.cover,
                       ),
                     ),
@@ -83,14 +85,14 @@ class OnBoardingWidget extends StatelessWidget {
               ),
             ),
             Positioned(
-              top: Dimensions.screenHeight / 1.8,
+              top: dimensions.screenHeight / 1.8,
               child: Column(
                 children: [
                   SizedBox(
-                    width: Dimensions.screenWidth,
+                    width: dimensions.screenWidth,
                     child: Padding(
                       padding:
-                          EdgeInsets.symmetric(horizontal: Dimensions.width10),
+                          EdgeInsets.symmetric(horizontal: dimensions.width10),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
@@ -99,7 +101,7 @@ class OnBoardingWidget extends StatelessWidget {
                               text: text,
                               fontWeight: FontWeight.w600,
                               textColor: AppColor.colorWhite,
-                              sizeText: Dimensions.fontSize21 / 1.1,
+                              sizeText: dimensions.fontSize21 / 1.1,
                             ),
                           ),
                         ],

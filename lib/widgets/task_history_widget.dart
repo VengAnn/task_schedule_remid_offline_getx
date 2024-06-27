@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 import 'package:task_remind_offline/components/dialog_show.dart';
 import 'package:task_remind_offline/models/task_sqlite/task_model.dart';
@@ -17,10 +16,12 @@ class TaskHistoryWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final dimensions = Dimensions(context);
+
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: Dimensions.width5 * 2),
+      padding: EdgeInsets.symmetric(horizontal: dimensions.width5 * 2),
       width: MediaQuery.of(context).size.width,
-      margin: EdgeInsets.only(bottom: Dimensions.width10),
+      margin: EdgeInsets.only(bottom: dimensions.width10),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -33,7 +34,7 @@ class TaskHistoryWidget extends StatelessWidget {
               const Icon(
                 Icons.done_all_outlined,
               ),
-              SizedBox(width: Dimensions.width5),
+              SizedBox(width: dimensions.width5),
               SimpleText(text: task.startTime!),
               const Spacer(),
               // icon more for editing
@@ -45,14 +46,14 @@ class TaskHistoryWidget extends StatelessWidget {
               ),
             ],
           ),
-          SizedBox(height: Dimensions.height5),
+          SizedBox(height: dimensions.height5),
           //
           Container(
-            padding: EdgeInsets.all(Dimensions.width10),
+            padding: EdgeInsets.all(dimensions.width10),
             //  width: SizeConfig.screenWidth * 0.78,
             decoration: BoxDecoration(
               color: _getBGClr(task.color ?? 0),
-              borderRadius: BorderRadius.circular(Dimensions.width10),
+              borderRadius: BorderRadius.circular(dimensions.width10),
               boxShadow: [
                 BoxShadow(
                   color: Colors.black.withOpacity(0.1),
@@ -69,16 +70,13 @@ class TaskHistoryWidget extends StatelessWidget {
                     children: [
                       Text(
                         task.title ?? "",
-                        style: GoogleFonts.lato(
-                          textStyle: TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold,
-                            color:
-                                task.color == 2 ? Colors.black : Colors.white,
-                          ),
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                          color: task.color == 2 ? Colors.black : Colors.white,
                         ),
                       ),
-                      SizedBox(height: Dimensions.height10),
+                      SizedBox(height: dimensions.height10),
                       Row(
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
@@ -87,40 +85,35 @@ class TaskHistoryWidget extends StatelessWidget {
                             color: task.color == 2
                                 ? Colors.black
                                 : Colors.grey[200],
-                            size: Dimensions.iconSize17,
+                            size: dimensions.iconSize17,
                           ),
-                          SizedBox(width: Dimensions.width10),
+                          SizedBox(width: dimensions.width10),
                           Text(
                             "${task.startTime} - ${task.endTime}",
-                            style: GoogleFonts.lato(
-                              textStyle: TextStyle(
-                                fontSize: Dimensions.fontSize15,
-                                color: task.color == 2
-                                    ? Colors.black
-                                    : Colors.grey[100],
-                              ),
+                            style: TextStyle(
+                              fontSize: dimensions.fontSize15,
+                              color: task.color == 2
+                                  ? Colors.black
+                                  : Colors.grey[100],
                             ),
                           ),
                         ],
                       ),
-                      SizedBox(height: Dimensions.height10),
+                      SizedBox(height: dimensions.height10),
                       Text(
                         task.note ?? "",
-                        style: GoogleFonts.lato(
-                          textStyle: TextStyle(
-                            fontSize: 15,
-                            color: task.color == 2
-                                ? Colors.black
-                                : Colors.grey[100],
-                          ),
+                        style: TextStyle(
+                          fontSize: 15,
+                          color:
+                              task.color == 2 ? Colors.black : Colors.grey[100],
                         ),
                       ),
                     ],
                   ),
                 ),
                 Container(
-                  margin: EdgeInsets.symmetric(horizontal: Dimensions.width10),
-                  height: Dimensions.height20 * 2,
+                  margin: EdgeInsets.symmetric(horizontal: dimensions.width10),
+                  height: dimensions.height20 * 2,
                   width: 0.5,
                   color: task.color == 2
                       ? Colors.black
@@ -130,12 +123,10 @@ class TaskHistoryWidget extends StatelessWidget {
                   quarterTurns: 3,
                   child: Text(
                     task.isCompleted == 1 ? "COMPLETED" : "TODO",
-                    style: GoogleFonts.lato(
-                      textStyle: TextStyle(
-                        fontSize: 10,
-                        fontWeight: FontWeight.bold,
-                        color: task.color == 2 ? Colors.black : Colors.white,
-                      ),
+                    style: TextStyle(
+                      fontSize: 10,
+                      fontWeight: FontWeight.bold,
+                      color: task.color == 2 ? Colors.black : Colors.white,
                     ),
                   ),
                 ),

@@ -46,7 +46,12 @@ class NotificationController {
       Task taskObj = Task.fromJson(taskMap);
 
       navigatorKey.currentState?.push(
-        MaterialPageRoute(builder: (_) => DetailTaskPage(task: taskObj)),
+        MaterialPageRoute(
+          builder: (_) => DetailTaskPage(
+            task: taskObj,
+            isNotiClicked: true,
+          ),
+        ),
       );
       log("Navigated to DetailTaskPage");
     } else {

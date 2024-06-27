@@ -31,23 +31,25 @@ class _CustomDropdownWidgetState extends State<CustomDropdownWidget> {
 
   @override
   Widget build(BuildContext context) {
+    final dimensions = Dimensions(context);
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        SizedBox(height: Dimensions.height5),
+        SizedBox(height: dimensions.height5),
         Text(
           widget.textTitle!,
           style: TextStyle(
-            fontSize: Dimensions.fontSize15,
+            fontSize: dimensions.fontSize15,
             fontWeight: FontWeight.bold,
             color: Colors.black,
           ),
         ),
-        SizedBox(height: Dimensions.height5),
+        SizedBox(height: dimensions.height5),
         Container(
-          height: Dimensions.height20 * 2,
-          width: Dimensions.screenWidth,
-          padding: EdgeInsets.symmetric(horizontal: Dimensions.height10),
+          height: dimensions.height20 * 2,
+          width: dimensions.screenWidth,
+          padding: EdgeInsets.symmetric(horizontal: dimensions.height10),
           decoration: BoxDecoration(
             color: Colors.white,
             borderRadius: BorderRadius.circular(10),
@@ -66,24 +68,24 @@ class _CustomDropdownWidgetState extends State<CustomDropdownWidget> {
           child: DropdownButtonHideUnderline(
             child: DropdownButton<String>(
               //isExpanded: true
-              borderRadius: BorderRadius.circular(Dimensions.radius15),
+              borderRadius: BorderRadius.circular(dimensions.radius15),
               value: _selectedItem,
               hint: Text(
                 'Choose an item',
                 style: TextStyle(
                   color: Colors.grey[600],
-                  fontSize: Dimensions.fontSize15,
+                  fontSize: dimensions.fontSize15,
                 ),
               ),
               icon: Icon(
                 Icons.arrow_drop_down,
                 color: Colors.grey[600],
               ),
-              iconSize: Dimensions.iconsize16 * 2,
+              iconSize: dimensions.iconsize16 * 2,
               //isExpanded: true,
               style: TextStyle(
                 color: Colors.black,
-                fontSize: Dimensions.fontSize15,
+                fontSize: dimensions.fontSize15,
               ),
               items: widget.items.map((String value) {
                 return DropdownMenuItem<String>(

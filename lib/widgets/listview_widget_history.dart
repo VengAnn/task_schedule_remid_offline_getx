@@ -62,6 +62,8 @@ class _ListviewWidgetHistoryState extends State<ListviewWidgetHistory> {
 
   @override
   Widget build(BuildContext context) {
+    final dimensions = Dimensions(context);
+
     return widget.tasksLs.isEmpty
         ? const Center(
             child: SimpleText(text: "Data is empty"),
@@ -94,7 +96,7 @@ class _ListviewWidgetHistoryState extends State<ListviewWidgetHistory> {
                         const Icon(
                           Icons.done_all_outlined,
                         ),
-                        SizedBox(width: Dimensions.width5),
+                        SizedBox(width: dimensions.width5),
                         // start time text
                         SimpleText(
                           text: task.startTime.toString(),
@@ -110,19 +112,23 @@ class _ListviewWidgetHistoryState extends State<ListviewWidgetHistory> {
                       ],
                     ),
                     //
-                    SizedBox(height: Dimensions.height5),
+                    SizedBox(height: dimensions.height5),
                     //
                     GestureDetector(
                       onLongPress: () {
                         // show bottom sheet for delete task , or update task to complete
-                        _showBottomSheet_2_field(context: context, task: task);
+                        _showBottomSheet_2_field(
+                          context: context,
+                          task: task,
+                          dimensions: dimensions,
+                        );
                       },
                       child: Container(
-                        padding: EdgeInsets.all(Dimensions.width10),
+                        padding: EdgeInsets.all(dimensions.width10),
                         decoration: BoxDecoration(
                           color: _getBGClr(task.color!),
                           borderRadius:
-                              BorderRadius.circular(Dimensions.width10),
+                              BorderRadius.circular(dimensions.width10),
                           boxShadow: [
                             BoxShadow(
                               color: Colors.black.withOpacity(0.1),
@@ -141,15 +147,14 @@ class _ListviewWidgetHistoryState extends State<ListviewWidgetHistory> {
                                   Text(
                                     "Title: ${task.title}",
                                     style: TextStyle(
-                                      fontFamily: 'Lato',
-                                      fontSize: Dimensions.fontSize15,
+                                      fontSize: dimensions.fontSize15,
                                       fontWeight: FontWeight.bold,
                                       color: task.color == 2
                                           ? Colors.black
                                           : Colors.white,
                                     ),
                                   ),
-                                  SizedBox(height: Dimensions.height10),
+                                  SizedBox(height: dimensions.height10),
                                   Row(
                                     crossAxisAlignment:
                                         CrossAxisAlignment.center,
@@ -159,15 +164,14 @@ class _ListviewWidgetHistoryState extends State<ListviewWidgetHistory> {
                                         color: task.color == 2
                                             ? Colors.black
                                             : Colors.grey[200],
-                                        size: Dimensions.iconSize17,
+                                        size: dimensions.iconSize17,
                                       ),
-                                      SizedBox(width: Dimensions.width10),
+                                      SizedBox(width: dimensions.width10),
                                       // start time text and end time text
                                       Text(
                                         "Start: ${task.startTime} - End: ${task.endTime}",
                                         style: TextStyle(
-                                          fontFamily: 'Lato',
-                                          fontSize: Dimensions.fontSize15,
+                                          fontSize: dimensions.fontSize15,
                                           color: task.color == 2
                                               ? Colors.black
                                               : Colors.grey[100],
@@ -175,13 +179,12 @@ class _ListviewWidgetHistoryState extends State<ListviewWidgetHistory> {
                                       ),
                                     ],
                                   ),
-                                  SizedBox(height: Dimensions.height10),
+                                  SizedBox(height: dimensions.height10),
                                   // note text
                                   Text(
                                     "Note: ${task.note}",
                                     style: TextStyle(
-                                      fontFamily: 'Lato',
-                                      fontSize: Dimensions.fontSize15,
+                                      fontSize: dimensions.fontSize15,
                                       color: task.color == 2
                                           ? Colors.black
                                           : Colors.grey[100],
@@ -192,8 +195,8 @@ class _ListviewWidgetHistoryState extends State<ListviewWidgetHistory> {
                             ),
                             Container(
                               margin: EdgeInsets.symmetric(
-                                  horizontal: Dimensions.width10),
-                              height: Dimensions.height20 * 2,
+                                  horizontal: dimensions.width10),
+                              height: dimensions.height20 * 2,
                               width: 0.5,
                               color: task.color == 2
                                   ? Colors.black
@@ -204,8 +207,7 @@ class _ListviewWidgetHistoryState extends State<ListviewWidgetHistory> {
                               child: Text(
                                 task.color == 1 ? "COMPLETED" : "TODO",
                                 style: TextStyle(
-                                  fontFamily: 'Lato',
-                                  fontSize: Dimensions.fontSize15,
+                                  fontSize: dimensions.fontSize15,
                                   color: task.color == 2
                                       ? Colors.black
                                       : Colors.grey[100],
@@ -259,7 +261,10 @@ void _showBottomSheet({required BuildContext context, required Task task}) {
 
 //
 // ignore: non_constant_identifier_names
-_showBottomSheet_2_field({required BuildContext context, required Task task}) {
+_showBottomSheet_2_field(
+    {required BuildContext context,
+    required Task task,
+    required Dimensions dimensions}) {
   showModalBottomSheet(
     context: context,
     isScrollControlled: true,
@@ -267,20 +272,20 @@ _showBottomSheet_2_field({required BuildContext context, required Task task}) {
       return Builder(builder: (context) {
         return SingleChildScrollView(
           child: Container(
-            height: MediaQuery.of(context).size.height * 0.2,
+            height: dimensions.height20 * 6,
             color: Colors.transparent,
             child: Column(
               children: [
-                SizedBox(height: Dimensions.height5),
+                SizedBox(height: dimensions.height5),
                 Container(
-                  width: Dimensions.width20 * 3,
-                  height: Dimensions.height10,
+                  width: dimensions.width20 * 3,
+                  height: dimensions.height10,
                   decoration: BoxDecoration(
                     color: Colors.amber,
-                    borderRadius: BorderRadius.circular(Dimensions.width10),
+                    borderRadius: BorderRadius.circular(dimensions.width10),
                   ),
                 ),
-                SizedBox(height: Dimensions.height20),
+                SizedBox(height: dimensions.height20),
                 ContinerWidgetUpdateAndDelete(
                   ontap: () async {
                     await DBHelper.delete(task);
@@ -297,9 +302,10 @@ _showBottomSheet_2_field({required BuildContext context, required Task task}) {
                     );
                   },
                   text: "Delete Task",
+                  dimensions: dimensions,
                 ),
                 //
-                SizedBox(height: Dimensions.height5),
+                SizedBox(height: dimensions.height5),
                 ContinerWidgetUpdateAndDelete(
                   ontap: () async {
                     Task taskNew = Task(
@@ -327,6 +333,7 @@ _showBottomSheet_2_field({required BuildContext context, required Task task}) {
                     );
                   },
                   text: "Update Task to Complete",
+                  dimensions: dimensions,
                 ),
               ],
             ),
@@ -340,11 +347,13 @@ _showBottomSheet_2_field({required BuildContext context, required Task task}) {
 class ContinerWidgetUpdateAndDelete extends StatelessWidget {
   final VoidCallback ontap;
   final String text;
+  final Dimensions dimensions;
 
   const ContinerWidgetUpdateAndDelete({
     super.key,
     required this.ontap,
     required this.text,
+    required this.dimensions,
   });
 
   @override
@@ -352,12 +361,12 @@ class ContinerWidgetUpdateAndDelete extends StatelessWidget {
     return GestureDetector(
       onTap: ontap,
       child: Container(
-        margin: EdgeInsets.symmetric(horizontal: Dimensions.width10),
+        margin: EdgeInsets.symmetric(horizontal: dimensions.width10),
         width: double.maxFinite,
-        height: Dimensions.height20 * 2,
+        height: dimensions.height20 * 2,
         decoration: BoxDecoration(
           color: Colors.white,
-          borderRadius: BorderRadius.circular(Dimensions.radius10),
+          borderRadius: BorderRadius.circular(dimensions.radius10),
           boxShadow: [
             BoxShadow(
               color: Colors.black.withOpacity(0.1),

@@ -3,34 +3,43 @@ import 'package:get/get.dart';
 import 'package:task_remind_offline/components/dialog_show.dart';
 import 'package:task_remind_offline/controller/calendar/calendare_page_controller.dart';
 import 'package:task_remind_offline/models/task_sqlite/task_model.dart';
+import 'package:task_remind_offline/routes/route_helper.dart';
 import 'package:task_remind_offline/utils/app_color.dart';
 import 'package:task_remind_offline/utils/dimensions.dart';
 import 'package:task_remind_offline/widgets/simple_text.dart';
 
+// ignore: must_be_immutable
 class DetailTaskPage extends StatelessWidget {
+  bool isNotiClicked;
   final Task? task;
 
-  const DetailTaskPage({
+  DetailTaskPage({
     super.key,
     this.task,
+    this.isNotiClicked = false,
   });
 
   @override
   Widget build(BuildContext context) {
+    final dimensions = Dimensions(context);
+
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
           onPressed: () {
             // Get.toNamed(RouteHelper.getCalenderPage());
-
-            Get.find<CalendarPageController>().getTaskFromTaskController();
-            Get.back();
+            if (isNotiClicked) {
+              Get.toNamed(RouteHelper.getSplashPage());
+            } else {
+              Get.find<CalendarPageController>().getTaskFromTaskController();
+              Get.back();
+            }
           },
           icon: const Icon(Icons.close_outlined),
         ),
         title: SimpleText(
           text: "title_text_detailPage".tr,
-          sizeText: Dimensions.fontSize15 * 1.5,
+          sizeText: dimensions.fontSize15 * 1.5,
           fontWeight: FontWeight.w500,
         ),
         // actions: [
@@ -43,15 +52,15 @@ class DetailTaskPage extends StatelessWidget {
         // ],
       ),
       body: Padding(
-        padding: EdgeInsets.all(Dimensions.width10),
+        padding: EdgeInsets.all(dimensions.width10),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Row(
               children: [
                 Container(
-                  width: Dimensions.width20 * 2,
-                  height: Dimensions.width20 * 2,
+                  width: dimensions.width20 * 2,
+                  height: dimensions.width20 * 2,
                   decoration: BoxDecoration(
                     color: task!.color == 0
                         ? AppColor.bluishClr
@@ -59,17 +68,17 @@ class DetailTaskPage extends StatelessWidget {
                             ? AppColor.pinkClr
                             : AppColor
                                 .yellowClr, // this will be dynmaic color follow task
-                    borderRadius: BorderRadius.circular(Dimensions.radius10),
+                    borderRadius: BorderRadius.circular(dimensions.radius10),
                   ),
                 ),
                 Padding(
-                  padding: EdgeInsets.only(left: Dimensions.width10),
+                  padding: EdgeInsets.only(left: dimensions.width10),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       SimpleText(
                         text: task!.title!,
-                        sizeText: Dimensions.fontSize15,
+                        sizeText: dimensions.fontSize15,
                         fontWeight: FontWeight.w500,
                       ),
                       // date
@@ -77,7 +86,7 @@ class DetailTaskPage extends StatelessWidget {
                         children: [
                           SimpleText(
                             text: task!.date!,
-                            sizeText: Dimensions.fontSize15,
+                            sizeText: dimensions.fontSize15,
                             fontWeight: FontWeight.w500,
                           ),
                         ],
@@ -87,18 +96,18 @@ class DetailTaskPage extends StatelessWidget {
                 ),
               ],
             ),
-            SizedBox(height: Dimensions.height10),
+            SizedBox(height: dimensions.height10),
             //
             Row(
               children: [
                 Icon(
                   Icons.notifications_none_outlined,
-                  size: Dimensions.iconSize17 * 1.7,
+                  size: dimensions.iconSize17 * 1.7,
                 ),
-                SizedBox(width: Dimensions.width10),
+                SizedBox(width: dimensions.width10),
                 SimpleText(
                   text: "${task!.remind!} ${"text_min_before_detailPage".tr}",
-                  sizeText: Dimensions.fontSize15,
+                  sizeText: dimensions.fontSize15,
                   fontWeight: FontWeight.w500,
                 ),
               ],
@@ -108,31 +117,31 @@ class DetailTaskPage extends StatelessWidget {
               children: [
                 Icon(
                   Icons.description_outlined,
-                  size: Dimensions.iconSize17 * 1.7,
+                  size: dimensions.iconSize17 * 1.7,
                 ),
-                SizedBox(width: Dimensions.width10),
+                SizedBox(width: dimensions.width10),
                 SimpleText(
                   text: task!.note!,
-                  sizeText: Dimensions.fontSize15,
+                  sizeText: dimensions.fontSize15,
                   fontWeight: FontWeight.w500,
                 ),
               ],
             ),
-            SizedBox(height: Dimensions.height5),
+            SizedBox(height: dimensions.height5),
             // time
             Row(
               children: [
                 // start time and end time
                 Icon(
                   Icons.access_time_outlined,
-                  size: Dimensions.iconSize17 * 1.7,
+                  size: dimensions.iconSize17 * 1.7,
                 ),
-                SizedBox(width: Dimensions.width10),
+                SizedBox(width: dimensions.width10),
                 Expanded(
                   child: SimpleText(
                     text:
                         "${"text_startTime".tr}: ${task!.startTime!} - ${"text_endTime".tr}: ${task!.endTime}",
-                    sizeText: Dimensions.fontSize15,
+                    sizeText: dimensions.fontSize15,
                     fontWeight: FontWeight.w500,
                     textAlign: TextAlign.left,
                   ),
@@ -144,12 +153,12 @@ class DetailTaskPage extends StatelessWidget {
               children: [
                 Icon(
                   Icons.repeat_one_outlined,
-                  size: Dimensions.iconSize17 * 1.7,
+                  size: dimensions.iconSize17 * 1.7,
                 ),
-                SizedBox(width: Dimensions.width10),
+                SizedBox(width: dimensions.width10),
                 SimpleText(
                   text: "${"text_repeat".tr}: ${task!.repeat}",
-                  sizeText: Dimensions.fontSize15,
+                  sizeText: dimensions.fontSize15,
                   fontWeight: FontWeight.w500,
                 ),
               ],
@@ -159,14 +168,14 @@ class DetailTaskPage extends StatelessWidget {
               children: [
                 Icon(
                   Icons.check_outlined,
-                  size: Dimensions.iconSize17 * 1.7,
+                  size: dimensions.iconSize17 * 1.7,
                 ),
-                SizedBox(width: Dimensions.width10),
+                SizedBox(width: dimensions.width10),
                 SimpleText(
                   text:
                       // ignore: unnecessary_string_interpolations
                       "${task!.isCompleted! == 1 ? 'text_task_complete'.tr : 'text_task_not_complete'.tr}",
-                  sizeText: Dimensions.fontSize15,
+                  sizeText: dimensions.fontSize15,
                   fontWeight: FontWeight.w500,
                 ),
               ],
