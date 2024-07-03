@@ -2,25 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:task_remind_offline/utils/dimensions.dart';
 import 'package:task_remind_offline/widgets/simple_text.dart';
 
-class ItemDrawerWidget extends StatefulWidget {
+class ItemDrawerWidget extends StatelessWidget {
   final VoidCallback onTap;
   final IconData icon;
   final String text;
+  final bool isActive;
 
   const ItemDrawerWidget({
     Key? key,
     required this.onTap,
     required this.icon,
     required this.text,
+    required this.isActive,
   }) : super(key: key);
-
-  @override
-  // ignore: library_private_types_in_public_api
-  _ItemDrawerWidgetState createState() => _ItemDrawerWidgetState();
-}
-
-class _ItemDrawerWidgetState extends State<ItemDrawerWidget> {
-  bool _isTapped = false;
 
   @override
   Widget build(BuildContext context) {
@@ -31,16 +25,8 @@ class _ItemDrawerWidgetState extends State<ItemDrawerWidget> {
         left: dimensions.width20,
         right: dimensions.width20,
       ),
-      child: GestureDetector(
-        onTap: () {
-          setState(() {
-            _isTapped = !_isTapped;
-          });
-          // delay a bit to see something tap on or see animation
-          Future.delayed(const Duration(milliseconds: 100), () {
-            widget.onTap();
-          });
-        },
+      child: InkWell(
+        onTap: onTap,
         child: Column(
           children: [
             SizedBox(
@@ -49,8 +35,7 @@ class _ItemDrawerWidgetState extends State<ItemDrawerWidget> {
               child: Container(
                 width: double.maxFinite,
                 decoration: BoxDecoration(
-                  //color: !_isTapped ? Colors.white : null,
-                  gradient: _isTapped
+                  gradient: isActive
                       ? LinearGradient(
                           colors: [
                             Colors.blue.withOpacity(0.7),
@@ -65,14 +50,14 @@ class _ItemDrawerWidgetState extends State<ItemDrawerWidget> {
                 child: Row(
                   children: [
                     Icon(
-                      widget.icon,
-                      color: _isTapped ? Colors.black : Colors.black,
+                      icon,
+                      color: isActive ? Colors.black : Colors.black,
                     ),
                     SizedBox(width: dimensions.width20),
                     SimpleText(
-                      text: widget.text,
+                      text: text,
                       sizeText: dimensions.fontSize15,
-                      textColor: _isTapped ? Colors.black : Colors.black,
+                      textColor: isActive ? Colors.black : Colors.black,
                     ),
                   ],
                 ),
@@ -84,7 +69,7 @@ class _ItemDrawerWidgetState extends State<ItemDrawerWidget> {
               ),
               child: Divider(
                 thickness: 1,
-                color: _isTapped ? Colors.blue : Colors.black,
+                color: isActive ? Colors.blue : Colors.black,
               ),
             ),
           ],

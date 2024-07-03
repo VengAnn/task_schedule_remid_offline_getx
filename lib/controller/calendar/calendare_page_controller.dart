@@ -61,7 +61,7 @@ class CalendarPageController extends GetxController {
 
       if (taskDateTime.isAfter(now)) {
         if (task.repeat == "None") {
-          log("Task : id :${task.id} startTIme: ${task.startTime}, repeat : ${task.repeat}, task : ${task.remind}");
+          log("Task : id :${task.id} startTIme: ${task.startTime}, repeat : ${task.repeat}, remind : ${task.remind}");
           // Subtract the reminder time from the taskDateTime if remind is not 0 and not null
           if (task.remind != null && task.remind != 0) {
             int remindMinutes = task.remind!;
@@ -83,6 +83,14 @@ class CalendarPageController extends GetxController {
         } else if (task.repeat == "Daily") {
           // Handle repeating notifications
           log("Task : ${task.startTime}, repeat : ${task.repeat}, task : ${task.remind}");
+
+          // Subtract the reminder time from the taskDateTime if remind is not 0 and not null
+          if (task.remind != null && task.remind != 0) {
+            int remindMinutes = task.remind!;
+            taskDateTime =
+                taskDateTime.subtract(Duration(minutes: remindMinutes));
+          }
+
           AwesomeNotificationHelper.scheduleDailyNotification(
             task: task,
             title: task.title!,

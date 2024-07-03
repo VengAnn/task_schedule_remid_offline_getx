@@ -226,7 +226,7 @@ class _DialogShowState extends State<DialogShow> {
               initialSelectedItem: remindList.first,
               onChanged: (value) {
                 setState(() {
-                  _selectedRepeat = value!;
+                  _selectedRemider = int.parse(value!);
                 });
               },
             ),
@@ -292,6 +292,10 @@ class _DialogShowState extends State<DialogShow> {
           Get.find<CalendarPageController>().getDataLocalForAlerNotification();
 
           Get.back();
+          Dialogs.showSnackBar(
+            "Add Task successfully😍",
+            durationMilliseconds: 800,
+          );
         }
       } else {
         Dialogs.showSnackBar("start time and end time can't the same!");

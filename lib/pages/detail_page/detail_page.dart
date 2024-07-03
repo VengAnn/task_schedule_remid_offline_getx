@@ -4,12 +4,13 @@ import 'package:task_remind_offline/components/dialog_show.dart';
 import 'package:task_remind_offline/controller/calendar/calendare_page_controller.dart';
 import 'package:task_remind_offline/models/task_sqlite/task_model.dart';
 import 'package:task_remind_offline/routes/route_helper.dart';
+import 'package:task_remind_offline/services/databaseHelper/database_helper.dart';
 import 'package:task_remind_offline/utils/app_color.dart';
 import 'package:task_remind_offline/utils/dimensions.dart';
 import 'package:task_remind_offline/widgets/simple_text.dart';
 
 // ignore: must_be_immutable
-class DetailTaskPage extends StatelessWidget {
+class DetailTaskPage extends StatefulWidget {
   bool isNotiClicked;
   final Task? task;
 
@@ -20,6 +21,33 @@ class DetailTaskPage extends StatelessWidget {
   });
 
   @override
+  State<DetailTaskPage> createState() => _DetailTaskPageState();
+}
+
+class _DetailTaskPageState extends State<DetailTaskPage> {
+  @override
+  void initState() {
+    super.initState();
+
+    // update task on local sqlite to completed if user click from the notification
+    if (widget.isNotiClicked) {
+      Task task = Task(
+        id: widget.task!.id,
+        note: widget.task!.note,
+        title: widget.task!.title,
+        date: widget.task!.date,
+        startTime: widget.task!.startTime,
+        endTime: widget.task!.endTime,
+        remind: widget.task!.remind,
+        repeat: widget.task!.repeat,
+        color: widget.task!.color,
+        isCompleted: 1, // update to completed
+      );
+      DBHelper.updateTask(task);
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
     final dimensions = Dimensions(context);
 
@@ -28,8 +56,8 @@ class DetailTaskPage extends StatelessWidget {
         leading: IconButton(
           onPressed: () {
             // Get.toNamed(RouteHelper.getCalenderPage());
-            if (isNotiClicked) {
-              Get.toNamed(RouteHelper.getSplashPage());
+            if (widget.isNotiClicked) {
+              Get.toNamed(RouteHelper.getCalenderPage());
             } else {
               Get.find<CalendarPageController>().getTaskFromTaskController();
               Get.back();
@@ -62,9 +90,9 @@ class DetailTaskPage extends StatelessWidget {
                   width: dimensions.width20 * 2,
                   height: dimensions.width20 * 2,
                   decoration: BoxDecoration(
-                    color: task!.color == 0
+                    color: widget.task!.color == 0
                         ? AppColor.bluishClr
-                        : task!.color == 1
+                        : widget.task!.color == 1
                             ? AppColor.pinkClr
                             : AppColor
                                 .yellowClr, // this will be dynmaic color follow task
@@ -77,7 +105,7 @@ class DetailTaskPage extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       SimpleText(
-                        text: task!.title!,
+                        text: widget.task!.title!,
                         sizeText: dimensions.fontSize15,
                         fontWeight: FontWeight.w500,
                       ),
@@ -85,7 +113,7 @@ class DetailTaskPage extends StatelessWidget {
                       Row(
                         children: [
                           SimpleText(
-                            text: task!.date!,
+                            text: widget.task!.date!,
                             sizeText: dimensions.fontSize15,
                             fontWeight: FontWeight.w500,
                           ),
@@ -106,7 +134,8 @@ class DetailTaskPage extends StatelessWidget {
                 ),
                 SizedBox(width: dimensions.width10),
                 SimpleText(
-                  text: "${task!.remind!} ${"text_min_before_detailPage".tr}",
+                  text:
+                      "${widget.task!.remind!} ${"text_min_before_detailPage".tr}",
                   sizeText: dimensions.fontSize15,
                   fontWeight: FontWeight.w500,
                 ),
@@ -121,7 +150,7 @@ class DetailTaskPage extends StatelessWidget {
                 ),
                 SizedBox(width: dimensions.width10),
                 SimpleText(
-                  text: task!.note!,
+                  text: widget.task!.note!,
                   sizeText: dimensions.fontSize15,
                   fontWeight: FontWeight.w500,
                 ),
@@ -140,7 +169,7 @@ class DetailTaskPage extends StatelessWidget {
                 Expanded(
                   child: SimpleText(
                     text:
-                        "${"text_startTime".tr}: ${task!.startTime!} - ${"text_endTime".tr}: ${task!.endTime}",
+                        "${"text_startTime".tr}: ${widget.task!.startTime!} - ${"text_endTime".tr}: ${widget.task!.endTime}",
                     sizeText: dimensions.fontSize15,
                     fontWeight: FontWeight.w500,
                     textAlign: TextAlign.left,
@@ -157,7 +186,7 @@ class DetailTaskPage extends StatelessWidget {
                 ),
                 SizedBox(width: dimensions.width10),
                 SimpleText(
-                  text: "${"text_repeat".tr}: ${task!.repeat}",
+                  text: "${"text_repeat".tr}: ${widget.task!.repeat}",
                   sizeText: dimensions.fontSize15,
                   fontWeight: FontWeight.w500,
                 ),
@@ -172,9 +201,11 @@ class DetailTaskPage extends StatelessWidget {
                 ),
                 SizedBox(width: dimensions.width10),
                 SimpleText(
-                  text:
-                      // ignore: unnecessary_string_interpolations
-                      "${task!.isCompleted! == 1 ? 'text_task_complete'.tr : 'text_task_not_complete'.tr}",
+                  text: widget.isNotiClicked == true
+                      ? 'text_task_complete'.tr
+                      : widget.task!.isCompleted! == 1
+                          ? 'text_task_complete'.tr
+                          : 'text_task_not_complete'.tr,
                   sizeText: dimensions.fontSize15,
                   fontWeight: FontWeight.w500,
                 ),

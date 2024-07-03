@@ -24,68 +24,18 @@ class SharedPreferencesService {
     return _prefs.getBool("onboardingExist") ?? false;
   }
 
-  static void saveToken(String token) {
-    _prefs.setString("token", token);
+  // save drawer tapped index
+  static void saveDrawerTappedIndex(int index) {
+    _prefs.setInt("drawerTappedIndex", index);
   }
 
-  static String? getToken() {
-    return _prefs.getString("token");
+  // get drawer tapped
+  static int loadDrawerTappedIndex() {
+    return _prefs.getInt("drawerTappedIndex") ?? 0;
   }
 
-  static void clearToken() {
-    _prefs.remove("token");
-  }
-
-  static void saveIsLoginWithGoogle(bool isLogin) {
-    _prefs.setBool("isLoginWithGoogle", isLogin);
-  }
-
-  static void clearIsLoginWithGoogle() {
-    _prefs.remove("isLoginWithGoogle");
-  }
-
-  // save user id int
-  static void saveUserId(int userId) {
-    _prefs.setInt("userId", userId);
-  }
-
-  // get user id int
-  static int getUserId() {
-    return _prefs.getInt("userId") ?? 0;
-  }
-
-  // clear user id int
-  static void clearUserId() {
-    _prefs.remove("userId");
-  }
-
-  // save profile
-  static void saveProfile(String? profile) {
-    _prefs.setString("profile", profile!);
-  }
-
-  // get profile
-  static String? getProfile() {
-    return _prefs.getString("profile");
-  }
-
-  // clear profile
-  static void clearProfile() {
-    _prefs.remove("profile");
-  }
-
-  // save date for compare
-  static void saveDateForCompare(String? date) {
-    _prefs.setString("dateForCompare", date!);
-  }
-
-  // get date for compare
-  static String? getDateForCompare() {
-    return _prefs.getString("dateForCompare");
-  }
-
-  // clear date for compare
-  static void clearDateForCompare() {
-    _prefs.remove("dateForCompare");
+  // clear drawer tapped
+  static void clearDrawerTappedIndex() {
+    _prefs.setInt("drawerTappedIndex", 0);
   }
 }

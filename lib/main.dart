@@ -24,6 +24,8 @@ void initializeAwesomeNotification() {
         ledColor: Colors.white,
         importance: NotificationImportance.High,
         channelShowBadge: true,
+        // Custom sound awesome notificatin
+        soundSource: 'resource://raw/echo_alert',
       ),
     ],
   );
