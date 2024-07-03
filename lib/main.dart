@@ -12,8 +12,8 @@ import 'controller/awesome_noti_controller/awesome_noti_controller.dart';
 
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
-void initializeAwesomeNotification() {
-  AwesomeNotifications().initialize(
+Future<void> initializeAwesomeNotification() async {
+  await AwesomeNotifications().initialize(
     null, // Use the default app icon
     [
       NotificationChannel(
@@ -25,9 +25,14 @@ void initializeAwesomeNotification() {
         importance: NotificationImportance.High,
         channelShowBadge: true,
         // Custom sound awesome notificatin
-        soundSource: 'resource://raw/echo_alert',
+        soundSource: 'resource://raw/res_echo_alert',
+        playSound: true,
+        enableVibration: true,
+        criticalAlerts: true,
+        defaultRingtoneType: DefaultRingtoneType.Alarm,
       ),
     ],
+    debug: true,
   );
 
   //
@@ -42,7 +47,7 @@ void initializeAwesomeNotification() {
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  initializeAwesomeNotification();
+  await initializeAwesomeNotification();
   // await init_Dependency_Injection(); // initialize the dependencies getx
   await DBHelper.initDb(); // this initialize sqflite
   await SharedPreferencesService.init(); // this SharedPreferences
