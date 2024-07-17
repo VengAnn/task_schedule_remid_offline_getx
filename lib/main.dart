@@ -12,6 +12,7 @@ import 'controller/awesome_noti_controller/awesome_noti_controller.dart';
 
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
+// note: some real device by default close alert on background restricted like redmi... we need open alert permission on the settings that device ....
 Future<void> initializeAwesomeNotification() async {
   await AwesomeNotifications().initialize(
     null, // Use the default app icon
@@ -27,12 +28,11 @@ Future<void> initializeAwesomeNotification() async {
         // Custom sound awesome notificatin
         soundSource: 'resource://raw/res_echo_alert',
         playSound: true,
+        //
         enableVibration: true,
-        criticalAlerts: true,
-        defaultRingtoneType: DefaultRingtoneType.Alarm,
+        locked: true,
       ),
     ],
-    debug: true,
   );
 
   //
@@ -118,3 +118,6 @@ class MyApp extends StatelessWidget {
     );
   }
 }
+
+
+//

@@ -1,4 +1,4 @@
-package com.example.task_remind_offline
+package com.anndp.task_remind_offline
 
 import io.flutter.embedding.android.FlutterActivity
 
